@@ -22,6 +22,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $participant = new Participant();
+        //Affectation du ROLE USER par défaut, et Administrateur et Actif sur false par défaut lors de l'inscription
         $participant->setAdministrateur(false);
         $participant->setActif(false);
         $participant->setRoles(["ROLE_USER"]);
