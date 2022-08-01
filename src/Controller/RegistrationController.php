@@ -21,25 +21,30 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
-        $user = new Participant();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $participant = new Participant();
+        $participant->setAdministrateur(false);
+        $participant->setActif(false);
+        $participant->setRoles(["ROLE_USER"]);
+
+        $form = $this->createForm(RegistrationFormType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
+            $participant->setPassword(
             $userPasswordHasher->hashPassword(
-                    $user,
+                    $participant,
                     $form->get('plainPassword')->getData()
                 )
             );
+            $this->addFlash('success', 'Inscription réussie !');
 
-            $entityManager->persist($user);
+            $entityManager->persist($participant);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
             return $userAuthenticator->authenticateUser(
-                $user,
+                $participant,
                 $authenticator,
                 $request
             );

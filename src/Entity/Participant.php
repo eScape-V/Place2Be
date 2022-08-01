@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
@@ -24,6 +25,8 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez entrer un email")
+     * @Assert\Email(message="Cet email est déjà utilisé")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -40,16 +43,20 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
+     * @Assert\NotBlank(message="Veuillez entrer un nom")
      * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Veuillez entrer un prénom")
      * @ORM\Column(type="string", length=50)
      */
     private $prenom;
 
     /**
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Veuillez n'utiliser que des nombres")
+     * @Assert\NotBlank(message="Veuillez entrer un numéro de téléphone")
      * @ORM\Column(type="integer")
      */
     private $telephone;
@@ -81,6 +88,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $organisateur;
 
     /**
+     * @Assert\NotBlank(message="Veuillez entrer un pseudo")
      * @ORM\Column(type="string", length=50)
      */
     private $pseudo;

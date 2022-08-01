@@ -3,22 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>{% block title %}Place2Be{% endblock %}</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 
     {% block extrastyles %}{% endblock %}
 </head>
 <body>
     <header>
-        <div>
             <h1><a href="{{ path('main_home') }}"></a></h1>
             {% include("inc/nav.html.twig") %}
-        </div>
     </header>
-    {% block body %}{% endblock %}
+
+    <div class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+    <footer>
+        {% include("inc/nav.html.twig") %}
+        <div style="text-align: center">&copy; {{ "now"|date('Y') }} Place2Be</div>
+    </footer>
+    </div>
 </body>
 </html>
