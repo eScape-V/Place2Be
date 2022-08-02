@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
+use App\Repository\FileUploader;
 use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +27,7 @@ class RegistrationController extends AbstractController
                              UserAuthenticatorInterface $userAuthenticator,
                              AppAuthenticator $authenticator,
                              EntityManagerInterface $entityManager,
-                            SluggerInterface $slugger): Response
+                             FileUploader $fileUploader): Response
     {
         $participant = new Participant();
         //Affectation du ROLE USER par défaut, et Administrateur et Actif sur false par défaut lors de l'inscription
@@ -45,6 +46,12 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            //Upload de l'image
+            $file = $form->get('imageFile')->getData();
+            if($file) {
+                $fileName = $fileUploader->upload($file);
+                $participant->setImageName($fileName);
+            }
 
             $this->addFlash('success', 'Inscription réussie !');
 

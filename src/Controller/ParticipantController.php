@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Form\RegistrationFormType;
+use App\Repository\FileUploader;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +34,11 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/modifierProfil/{id}", name="modifierProfil")
      */
-    public function modifierProfil(Request $request, $id, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
+    public function modifierProfil(Request $request,
+                                   $id,
+                                   EntityManagerInterface $entityManager,
+                                   UserPasswordHasherInterface $hasher,
+                                    FileUploader $fileUploader): Response
     {
         $participant = $entityManager->getRepository(Participant::class)->find($id);
 
@@ -61,6 +66,13 @@ class ParticipantController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             //On vérifie si le mot de passe correspond au plainPassword rentré dans le form, pas au password crypté de la BDD
             if($hasher->isPasswordValid($participant, $form->get('plainPassword')->getData())){
+                //Upload de l'image
+                $file = $form->get('imageFile')->getData();
+                if($file) {
+                    $fileName = $fileUploader->upload($file);
+                    $participant->setImageName($fileName);
+                }
+
                 $entityManager->persist($participant);
                 $entityManager->flush();
 

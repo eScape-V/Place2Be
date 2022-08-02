@@ -13,6 +13,7 @@
             <button>Enregistrer</button>
             <button type="reset">Annuler</button>
             {{ form_end(form) }}
+            <img src="{{ asset('uploads/pictures/'~app.user.imageName) }}" alt="Image">
         </div>
     </div>
 {% endblock %}

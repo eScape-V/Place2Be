@@ -9,7 +9,7 @@
             <div>Téléphone : {{ participant.telephone }}€</div>
             <div>Email : {{ participant.email }}</div>
             <div>Campus : {{ participant.campus.nom }}</div>
-            <div> {{ participant.picture }}</div>
+            <div><img src="{{ asset('uploads/pictures/'~participant.imageName) }}" alt="Image"></div>
         </div>
     </div>
 {% endblock %}
