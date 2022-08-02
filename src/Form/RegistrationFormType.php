@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -68,25 +69,13 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('picture', FileType::class, [
+            ->add('imageFile', VichImageType::class, [
                 'label' => 'Ma photo',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 // make it optional so you don't have to re-upload the PDF file// every time you edit the Product details
                 'required' => false,
                 // unmapped fields can't define their validation using annotations// in the associated entity, so you can use the PHP constraint classes
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/jpg',
-                            'application/png',
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez sélectionner une image valide.',
-                    ])
-                ],
             ])
         ;
     }
