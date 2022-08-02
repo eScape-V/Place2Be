@@ -13,7 +13,9 @@
             <button>Enregistrer</button>
             <button type="reset">Annuler</button>
             {{ form_end(form) }}
-            <img src="{{ asset('uploads/pictures/'~app.user.imageName) }}" alt="Pas d'image uploadée.">
+            {% if(app.user.imageName) %}
+                <div><img src="{{ asset('uploads/pictures/'~app.user.imageName) }}" alt="Pas d'image uploadée"></div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
