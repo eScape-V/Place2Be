@@ -15,7 +15,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
- * @UniqueEntity(fields={"email","pseudo"}, message="Déjà utilisé.")
+ * @UniqueEntity(fields={"email"}, message="Email déjà utilisé.")
+ * @UniqueEntity(fields={"pseudo"}, message="Pseudo déjà utilisé.")
  * @Vich\Uploadable()
  */
 class Participant implements UserInterface, PasswordAuthenticatedUserInterface
