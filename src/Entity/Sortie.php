@@ -61,7 +61,7 @@ class Sortie
     private $organisateur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sortie")
+     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sortie", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $campus;

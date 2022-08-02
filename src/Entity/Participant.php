@@ -61,12 +61,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @Assert\Regex(pattern="/^[0-9]*$/", message="Veuillez n'utiliser que des nombres")
      * @Assert\NotBlank(message="Veuillez entrer un numéro de téléphone")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $telephone;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $administrateur;
 
@@ -104,7 +104,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $imageFile;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $imageName;
 
@@ -227,12 +227,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(int $telephone): self
+    public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
 
