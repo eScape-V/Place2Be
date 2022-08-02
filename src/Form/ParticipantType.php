@@ -11,12 +11,14 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ParticipantType extends AbstractType
 {
@@ -28,7 +30,7 @@ class ParticipantType extends AbstractType
                 'label' => 'Prénom'
             ])
             ->add('nom', TextType::class)
-            ->add('telephone', TextType::class, [
+            ->add('telephone', TelType::class, [
                 'label' => 'Téléphone'
             ])
             ->add('email', EmailType::class)
@@ -65,25 +67,13 @@ class ParticipantType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('picture', FileType::class, [
+            ->add('imageFile', VichImageType::class, [
                 'label' => 'Ma photo',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 // make it optional so you don't have to re-upload the PDF file// every time you edit the Product details
                 'required' => false,
                 // unmapped fields can't define their validation using annotations// in the associated entity, so you can use the PHP constraint classes
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/jpg',
-                            'application/png',
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez sélectionner une image valide.',
-                    ])
-                ],
             ])
         ;
     }

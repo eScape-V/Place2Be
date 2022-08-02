@@ -45,30 +45,6 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $picture = $form->get('picture')->getData();
-
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($picture) {
-                $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$picture->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $picture->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $participant->setPicture($newFilename);
-            }
 
             $this->addFlash('success', 'Inscription réussie !');
 
