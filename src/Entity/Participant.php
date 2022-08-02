@@ -89,7 +89,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @Assert\NotBlank(message="Veuillez entrer un pseudo")
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $pseudo;
 

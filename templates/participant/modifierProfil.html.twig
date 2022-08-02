@@ -3,17 +3,17 @@
 {% block title %}
     {{ parent() }} | Mon profil
 {% endblock %}
+
+{% block body %}
     <h2>Mon profil</h2>
     <div>
         <div>
-            {{ form_start(participantForm) }}
-            {{ form_widget(participantForm) }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
             <button>Enregistrer</button>
             <button type="reset">Annuler</button>
-            {{ form_end() }}
+            {{ form_end(form) }}
         </div>
     </div>
-{% block body %}
-
 {% endblock %}
 

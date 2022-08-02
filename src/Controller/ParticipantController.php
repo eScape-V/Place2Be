@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipantController extends AbstractController
@@ -32,30 +33,40 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/modifierProfil/{id}", name="modifierProfil")
      */
-    public function edit(Request $request, Participant $participant, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Participant $participant, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
-        if($this->getUser()) {
+        //Vérification que l'utilisateur est connecté, redirection vers le login si non
+        if(!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
-        if($this->getUser() === $participant) {
+        //Vérification que le profil que veut modifier l'utilisateur est bien le sien, sinon redirection Accueil
+        //et message flash d'erreur
+        if($this->getUser() !== $participant) {
+            $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('main_home');
         }
 
-        $participantForm = $this->createForm(ParticipantType::class, $participant);
-        $participantForm->handleRequest($request);
+        $form = $this->createForm(ParticipantType::class, $participant);
 
-        if($participantForm->isSubmitted() && $participantForm->isValid()){
-            $entityManager->persist($participant);
-            $entityManager->flush();
+        $form->handleRequest($request);
 
-            $this->addFlash('success', 'Informations modifiées avec succès !');
-            return $this->redirectToRoute('main_home', ['id' => $participant->getId()]);
+        if($form->isSubmitted() && $form->isValid()) {
+            //On vérifie si le mot de passe correspond au plainPassword rentré dans le form, pas au password crypté de la BDD
+            if($hasher->isPasswordValid($participant, $form->get('plainPassword')->getData())){
+                $entityManager->persist($participant);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Informations modifiées avec succès !');
+                return $this->redirectToRoute('main_home');
+            } else {
+                $this->addFlash('warning', 'Le mot de passe est incorrect.');
+            }
         }
-        $entityManager->flush();
 
+        //Si le formulaire est valide, enregistrement en BDD, redirection vers l'accueil avec message de succès
         return $this->render('participant/modifierProfil.html.twig', [
-            'participantForm' => $participantForm->createView()
+            'form' => $form->createView()
         ]);
     }
 }
