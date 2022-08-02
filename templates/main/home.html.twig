@@ -1,9 +1,66 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <h1>Test</h1>
-    </div>
+    <!--<section class="sorties">
+        <article>
+            <h2>Titre de la sortie</h2>
+            <div class="metadata">Publié le 02/08/2022 à 19:00</div>
+            <div class="content"><img src="http://placehold.it/150*150" alt="">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere fuga inventore minus recusandae, ut
+                    velit?</p>
+                <p>Aspernatur dicta eos et, id nostrum nulla officiis vel voluptates voluptatum! Corporis ea impedit
+                    nulla!</p>
+                <a href="" class="btn btn-primary">Détails</a></div>
+        </article>
+        <article>
+            <h2>Titre de la sortie</h2>
+            <div class="metadata">Publié le 02/08/2022 à 19:00</div>
+            <div class="content"><img src="http://placehold.it/150*150" alt="">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, atque dolorum hic ipsum
+                    reiciendis voluptatibus!</p>
+                <p>Atque consectetur dignissimos eaque impedit modi necessitatibus porro quasi, quidem sint vel. Ad,
+                    excepturi, sapiente.</p>
+                <a href="" class="btn btn-primary">Détails</a></div>
+        </article>
+        <article>
+            <h2>Titre de la sortie</h2>
+            <div class="metadata">Publié le 02/08/2022 à 19:00</div>
+            <div class="content"><img src="http://placehold.it/150*150" alt="">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolor eos exercitationem odit
+                    reiciendis sunt.</p>
+                <p>Alias asperiores assumenda consectetur deleniti dolorem eaque eum facere in incidunt minima modi,
+                    nostrum quibusdam?</p>
+                <a href="" class="btn btn-primary">Détails</a></div>
+        </article>
+    </section>-->
+    <table class="table table-hover">
+        <thead>
+        <tr class="table-primary">
+            <th scope="col">Nom de la sortie</th>
+            <th scope="col">Date de la sortie</th>
+            <th scope="col">Clôture</th>
+            <th scope="col">Inscrits/Places</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Inscrit</th>
+            <th scope="col">Organisateur</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td><a href="{{ path('sortie_show') }}" class="btn btn-primary">Détails</a></td>
+        </tr>
+
+        </tbody>
+    </table>
 {% endblock %}
 
 {% block title %}
