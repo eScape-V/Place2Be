@@ -1,38 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <!--<section class="sorties">
-        <article>
-            <h2>Titre de la sortie</h2>
-            <div class="metadata">Publié le 02/08/2022 à 19:00</div>
-            <div class="content"><img src="http://placehold.it/150*150" alt="">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere fuga inventore minus recusandae, ut
-                    velit?</p>
-                <p>Aspernatur dicta eos et, id nostrum nulla officiis vel voluptates voluptatum! Corporis ea impedit
-                    nulla!</p>
-                <a href="" class="btn btn-primary">Détails</a></div>
-        </article>
-        <article>
-            <h2>Titre de la sortie</h2>
-            <div class="metadata">Publié le 02/08/2022 à 19:00</div>
-            <div class="content"><img src="http://placehold.it/150*150" alt="">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, atque dolorum hic ipsum
-                    reiciendis voluptatibus!</p>
-                <p>Atque consectetur dignissimos eaque impedit modi necessitatibus porro quasi, quidem sint vel. Ad,
-                    excepturi, sapiente.</p>
-                <a href="" class="btn btn-primary">Détails</a></div>
-        </article>
-        <article>
-            <h2>Titre de la sortie</h2>
-            <div class="metadata">Publié le 02/08/2022 à 19:00</div>
-            <div class="content"><img src="http://placehold.it/150*150" alt="">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolor eos exercitationem odit
-                    reiciendis sunt.</p>
-                <p>Alias asperiores assumenda consectetur deleniti dolorem eaque eum facere in incidunt minima modi,
-                    nostrum quibusdam?</p>
-                <a href="" class="btn btn-primary">Détails</a></div>
-        </article>
-    </section>-->
+
     <table class="table table-hover">
         <thead>
         <tr class="table-primary">
@@ -48,16 +17,18 @@
         </thead>
         <tbody>
 
+        {% for sortie in sorties %}
         <tr>
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
+            <td>{{ sortie.dateLimiteInscription | date('d/m/Y')}} à {{ sortie.dateLimiteInscription | date('H:i') }}</td>
             <td>Column content</td>
+            <td>{{ sortie.etat.getLibelle() }}</td>
             <td>Column content</td>
-            <td>Column content</td>
-            <td>Column content</td>
-            <td>Column content</td>
-            <td>Column content</td>
-            <td>Column content</td>
+            <td>{{ sortie.organisateur.getNom() }}</td>
             <td><a href="{{ path('sortie_show') }}" class="btn btn-primary">Détails</a></td>
         </tr>
+        {% endfor %}
 
         </tbody>
     </table>
