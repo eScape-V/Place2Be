@@ -65,8 +65,6 @@ class RegistrationController extends AbstractController
                     // ... handle exception if something happens during file upload
                 }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
                 $participant->setPicture($newFilename);
             }
 

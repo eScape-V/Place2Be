@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantController extends AbstractController
 {
     /**
-     * @Route("/afficherProfil", name="afficherProfil")
+     * @Route("/afficherProfil/{id}", name="afficherProfil")
      */
     public function afficherProfil(int $id, ParticipantRepository $participantRepository): Response
     {
@@ -33,11 +33,19 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/modifierProfil/{id}", name="modifierProfil")
      */
-    public function edit(Request $request, Participant $participant, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
+    public function modifierProfil(Request $request, $id, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
+        $participant = $entityManager->getRepository(Participant::class)->find($id);
+
         //Vérification que l'utilisateur est connecté, redirection vers le login si non
         if(!$this->getUser()) {
             return $this->redirectToRoute('app_login');
+        }
+
+        if (!$participant) {
+            throw $this->createNotFoundException(
+                'Pas d\'utilisateur avec l\'identifiant '.$id
+            );
         }
 
         //Vérification que le profil que veut modifier l'utilisateur est bien le sien, sinon redirection Accueil
@@ -48,7 +56,6 @@ class ParticipantController extends AbstractController
         }
 
         $form = $this->createForm(ParticipantType::class, $participant);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
@@ -58,7 +65,7 @@ class ParticipantController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Informations modifiées avec succès !');
-                return $this->redirectToRoute('main_home');
+                return $this->redirectToRoute('main_home', ['id' => $participant->getId()]);
             } else {
                 $this->addFlash('warning', 'Le mot de passe est incorrect.');
             }

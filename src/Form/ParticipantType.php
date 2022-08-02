@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +29,7 @@ class ParticipantType extends AbstractType
                 'label' => 'Prénom'
             ])
             ->add('nom', TextType::class)
-            ->add('telephone', TextType::class, [
+            ->add('telephone', TelType::class, [
                 'label' => 'Téléphone'
             ])
             ->add('email', EmailType::class)

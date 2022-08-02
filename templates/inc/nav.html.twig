@@ -35,11 +35,11 @@
                         </a>
                     </li>
                 {% else %}
-                    <!--<li class="nav-item">
-                        <a class="nav-link active" href="{#  {{ path('app_register') }}#}">Mon profil
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('modifierProfil', {'id': app.user.id}) }}">Mon profil
                             <span class="visually-hidden">(current)</span>
                         </a>
-                    </li>*/-->
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter
                             <span class="visually-hidden">(current)</span>
