@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de la sortie{% endblock %}
+{% block title %}{{ parent() }} | Détails sortie{% endblock %}
 
 {% block body %}
     <div>
@@ -18,22 +18,22 @@
                 <br>
                 <tr>
                     <td>Date limite d'inscription: {{ sortie.dateLimiteInscription | date('d/m/Y')}} à {{ sortie.dateLimiteInscription | date('H:i') }}</td>
-                    <td>Rue: </td>
+                    <td>Rue: {{ sortie.lieu.rue }}</td>
                 </tr>
                 <br>
                 <tr>
-                    <td>Nombre de place: </td>
-                    <td>Code postal: </td>
+                    <td>Nombre de places: {{ sortie.nbInscriptionsMax }} personnes</td>
+                    <td>Code postal: {{ sortie.lieu.ville.codePostal }}</td>
                 </tr>
                 <br>
                 <tr>
-                    <td>Durée : {{ sortie.duree }}minutes</td>
-                    <td>Latitude: </td>
+                    <td>Durée: {{ sortie.duree }} minutes</td>
+                    <td>Latitude: {{ sortie.lieu.latitude }}</td>
                 </tr>
                 <br>
                 <tr>
                     <td>Description et infos: {{ sortie.infosSortie }}</td>
-                    <td>Longitude: </td>
+                    <td>Longitude: {{ sortie.lieu.longitude }}</td>
                 </tr>
             </tbody>
         </table>

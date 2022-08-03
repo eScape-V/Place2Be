@@ -26,10 +26,10 @@
             <td>{{ sortie.etat.getLibelle() }}</td>
             <td>{{ sortie.participants.count }}</td>
             <td>{{ sortie.organisateur.pseudo }}</td>
-            <td><a href="{{ path('afficherSortie', {'id': sortie.id}) }}">Afficher</a>
-                <a href="{{ path('afficherSortie', {'id': sortie.id}) }}">S'inscrire</a>
+            <td><a href="{{ path('sortie_afficherSortie', {'id': sortie.id}) }}">Afficher</a>
+                <a href="{{ path('sortie_afficherSortie', {'id': sortie.id}) }}">S'inscrire</a>
                 {% if(sortie.organisateur == app.user) %}
-                    <a href="{{ path('afficherSortie', {'id': sortie.id}) }}">Modifier</a>
+                    <a href="{{ path('sortie_afficherSortie', {'id': sortie.id}) }}">Modifier</a>
                 {% endif %}
             </td>
         </tr>
@@ -38,7 +38,7 @@
         </tbody>
     </table>
 
-    <!--<a href="{#  {{ path('sortie_show', {'id': sorties.id}) }}"#} class="btn btn-primary">Créer une sortie</a>-->
+    <a href="{{ path('sortie_creerSortie') }}" class="btn btn-primary">Créer une sortie</a>
 
 {% endblock %}
 

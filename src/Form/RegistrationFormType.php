@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -42,6 +43,9 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Mot de passe obligatoire',
+                    ]),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères',
@@ -71,11 +75,12 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Ma photo',
-                // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
-                // make it optional so you don't have to re-upload the PDF file// every time you edit the Product details
                 'required' => false,
-                // unmapped fields can't define their validation using annotations// in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new Image( ['mime TypesMessage' => 'Image format not allowed !'
+                    ])
+                ]
             ])
         ;
     }
