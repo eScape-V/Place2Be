@@ -15,22 +15,39 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+    <div class="form-group">
+        <label for="inputEmail" class="form-label mt-4">Email</label>
+        <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Veuillez saisir votre email" value="{{ last_username }}" autocomplete="email" required autofocus>
+        <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre email!</small>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword" class="form-label mt-4" >Mot de passe</label>
+        <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Mot ed passe" autocomplete="current-password" required>
+    </div>
+
+{#    <label for="inputEmail">Email</label>#}
+{#    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>#}
+{#    #}
+{#    <label for="inputPassword">Mot de passe</label>#}
+{#    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>#}
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me">Se souvenir de moi
-        </label>
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="_remember_me">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Se souvenir de moi</label>
     </div>
+
+{#    <div class="checkbox mb-3">#}
+{#        <label>#}
+{#            <input type="checkbox" name="_remember_me">Se souvenir de moi#}
+{#        </label>#}
+{#    </div>#}
 
     <button class="btn btn-lg btn-primary" type="submit">Connexion</button>
 </form>
     <a href="{{ path('app_register') }}">Créer un compte</a>
-    <a href="#">Mot de passe oublié</a>
+    <a style="margin-left: 2em" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
 
 {% endblock %}
