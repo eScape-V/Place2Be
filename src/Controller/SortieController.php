@@ -64,4 +64,6 @@ class SortieController extends AbstractController
             'sortieForm' => $sortieForm->createView()
         ]);
     }
+
+    //TODO: modifierSortie, annulerSortie
 }

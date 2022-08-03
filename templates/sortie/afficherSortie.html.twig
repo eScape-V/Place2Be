@@ -3,6 +3,8 @@
 {% block title %}{{ parent() }} | Détails sortie{% endblock %}
 
 {% block body %}
+    <h2>Détails de la sortie</h2>
+    <br>
     <div>
         <table class="table table-borderless">
             <tbody>
@@ -10,27 +12,22 @@
                     <td>Nom de la sortie: {{ sortie.nom }}</td>
                     <td>Campus: {{ sortie.campus.getNom() }}</td>
                 </tr>
-                <br>
                 <tr>
                     <td>Date et heure de la sortie: {{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
                     <td>Lieu: {{ sortie.lieu.getNom() }}</td>
                 </tr>
-                <br>
                 <tr>
-                    <td>Date limite d'inscription: {{ sortie.dateLimiteInscription | date('d/m/Y')}} à {{ sortie.dateLimiteInscription | date('H:i') }}</td>
+                    <td>Date limite d'inscription: {{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
                     <td>Rue: {{ sortie.lieu.rue }}</td>
                 </tr>
-                <br>
                 <tr>
                     <td>Nombre de places: {{ sortie.nbInscriptionsMax }} personnes</td>
                     <td>Code postal: {{ sortie.lieu.ville.codePostal }}</td>
                 </tr>
-                <br>
                 <tr>
                     <td>Durée: {{ sortie.duree }} minutes</td>
                     <td>Latitude: {{ sortie.lieu.latitude }}</td>
                 </tr>
-                <br>
                 <tr>
                     <td>Description et infos: {{ sortie.infosSortie }}</td>
                     <td>Longitude: {{ sortie.lieu.longitude }}</td>
@@ -40,5 +37,28 @@
         <br>
         <a href="" class="btn btn-primary">S'inscrire à la sortie</a>
     </div>
+    <br>
+    <br>
+    <h4>Liste des participants inscrits :</h4>
+    <table class="table table-hover">
+        <thead>
+        <tr class="table-primary">
+            <th scope="col">Pseudo</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Profil</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for participant in sortie.participants %}
+            <tr>
+                <td>{{ participant.pseudo }}</td>
+                <td>{{ participant.prenom }}{{ participant.nom }} </td>
+                <td><a href="{{ path('afficherProfil', {'id': participant.id}) }}">Afficher</a></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
 
 {% endblock %}
