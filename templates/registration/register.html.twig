@@ -3,10 +3,13 @@
 {% block title %}{{ parent() }} | Inscription{% endblock %}
 
 {% block body %}
-    <h1>Créer un compte</h1>
+    <h2>Créer un compte</h2>
+    <div class="form-group">
     {{ form_start(registrationForm) }}
         {{ form_widget(registrationForm) }}
-        <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
-        <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
+        <br>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="reset" class="btn btn-primary">Annuler</button>
     {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

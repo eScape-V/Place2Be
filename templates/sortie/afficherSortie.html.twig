@@ -35,7 +35,9 @@
             </tbody>
         </table>
         <br>
-        <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}" class="btn btn-primary">S'inscrire à la sortie</a>
+        <div class="creerSortie">
+            <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}" class="btn btn-primary">S'inscrire à la sortie</a>
+        </div>
     </div>
     <br>
     <br>
@@ -60,5 +62,7 @@
 
         </tbody>
     </table>
+    <br>
+    <br>
 
 {% endblock %}

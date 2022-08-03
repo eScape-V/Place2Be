@@ -35,8 +35,7 @@ body > .container {
 
 
 main {
-    flex: 0.7;
-    padding: 100px;
+    flex: 1;
 }
 
 
@@ -103,3 +102,29 @@ label {
     width: 300px;
 }
 
+h2 {
+    align-content: center;
+    margin: 50px;
+}
+
+button {
+    justify-content: center;
+    text-align: center;
+}
+
+form {
+    justify-content: center;
+}
+
+.liens {
+    text-align: center;
+}
+
+.form-group {
+    text-align: center;
+}
+
+button {
+    text-align: center;
+
+}
