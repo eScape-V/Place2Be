@@ -77,12 +77,13 @@ class SortieFixtures extends Fixture
             $participant[$i] = new Participant();
             $participant[$i]->setPrenom($faker->firstName);
             $participant[$i]->setNom($faker->lastName);
-            $participant[$i]->setTelephone("06XXXXXXXX");
+            $participant[$i]->setTelephone("06".rand(000000, 999999));
             $participant[$i]->setEmail($faker->email);
             $participant[$i]->setPassword($faker->password);
             $participant[$i]->setActif(true);
             $participant[$i]->setPseudo($faker->userName);
             $participant[$i]->setCampus($campus[0]);
+            $participant[$i]->setRoles(["ROLE_USER"]);
             $manager->persist($participant[$i]);
         }
 
