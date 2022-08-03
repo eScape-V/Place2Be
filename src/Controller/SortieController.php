@@ -65,5 +65,33 @@ class SortieController extends AbstractController
         ]);
     }
 
-    //TODO: modifierSortie, annulerSortie
+    /**
+     * @Route("/inscription/{id}", name="inscriptionSortie")
+     */
+    public function inscriptionSortie(int $id, EntityManagerInterface $entityManager): Response
+    {
+        if(!$this->getUser()) {
+            $this->addFlash('error', 'Veuillez vous connecter pour vous inscrire à une sortie');
+            return $this->redirectToRoute('app_login');
+        } else {
+            $sortie = $entityManager->getRepository(Sortie::class)->find($id);
+
+            if (!$sortie)
+                throw $this->createNotFoundException('Pas de sortie avec cet identifiant');
+
+            if ($sortie->getEtat()->getLibelle() === "Ouverte") {
+                $sortie->addParticipant($this->getUser());
+
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Inscription à la sortie validée !');
+            } else {
+                $this->addFlash('error', 'Impossible de s\'inscrire : vérifiez l\'état de la sortie et la dâte de clôture.');
+            }
+
+            return $this->redirectToRoute('main_home');
+        }
+    }
+    //TODO: modifierSortie, desistementSortie
 }
