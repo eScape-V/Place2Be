@@ -22,16 +22,24 @@
             <td>{{ sortie.nom }}</td>
             <td>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
             <td>{{ sortie.dateLimiteInscription | date('d/m/Y')}} à {{ sortie.dateLimiteInscription | date('H:i') }}</td>
-            <td>Column content</td>
+            <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
             <td>{{ sortie.etat.getLibelle() }}</td>
-            <td>Column content</td>
-            <td>Column content</td>
-            <td><a href="{{ path('sortie_show') }}" class="btn btn-primary">Détails</a></td>
+            <td>{{ sortie.participants.count }}</td>
+            <td>{{ sortie.organisateur.pseudo }}</td>
+            <td><a href="{{ path('afficherSortie', {'id': sortie.id}) }}">Afficher</a>
+                <a href="{{ path('afficherSortie', {'id': sortie.id}) }}">S'inscrire</a>
+                {% if(sortie.organisateur == app.user) %}
+                    <a href="{{ path('afficherSortie', {'id': sortie.id}) }}">Modifier</a>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
 
         </tbody>
     </table>
+
+    <!--<a href="{#  {{ path('sortie_show', {'id': sorties.id}) }}"#} class="btn btn-primary">Créer une sortie</a>-->
+
 {% endblock %}
 
 {% block title %}

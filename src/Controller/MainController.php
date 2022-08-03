@@ -35,16 +35,4 @@ class MainController extends AbstractController
     *}
     */
 
-
-    /**
-     * @Route("/sortie/", name="sortie_show")
-     */
-    public function show(SortieRepository $repo): Response
-    {
-        $sortie = $repo->find(2);
-
-        return $this->render('sortie/show.html.twig', [
-        "sortie" => $sortie
-        ]);
-    }
 }
