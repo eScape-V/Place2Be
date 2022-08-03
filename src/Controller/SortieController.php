@@ -41,12 +41,12 @@ class SortieController extends AbstractController
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         if(!$this->getUser()) {
-            $this->addFlash('error', 'Veuillez vous connecter');
+            $this->addFlash('error', 'Veuillez vous connecter pour créer une sortie');
             return $this->redirectToRoute('app_login');
         }
         $sortie->setOrganisateur($this->getUser());
         $etat = new Etat("1");
-        $etat->setLibelle("TEST");
+        $etat->setLibelle("Créée");
         $sortie->setEtat($etat);
 
         $sortieForm->handleRequest($request);
