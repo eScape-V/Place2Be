@@ -36,7 +36,41 @@
         </table>
         <br>
         <div class="creerSortie">
-            <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}" class="btn btn-primary">S'inscrire à la sortie</a>
+            {% if(sortie.participants.contains(app.user)) and sortie.etat.libelle != "En cours" %}
+                <div>
+                    <h5>Vous êtes déjà inscrit à cette sortie</h5>
+                </div>
+                <br>
+                <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}" class="btn btn-primary">Se désister</a>
+            {% else %}
+                {% if(sortie.etat.libelle == "Ouverte") %}
+                    <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}" class="btn btn-primary">S'inscrire à la sortie</a>
+                {% endif %}
+                {% if(sortie.etat.libelle == "Clôturée") %}
+                    {% if(sortie.participants.count == sortie.nbInscriptionsMax) or (sortie.dateLimiteInscription > date()) %}
+                        <h5>La sortie est clôturée pour l'instant. Nombre maximal de participants atteint, ou date limite d'inscription dépassée.</h5>
+                    {% endif %}
+                {% endif %}
+                {% if(sortie.etat.libelle == "En cours") %}
+                    <div>
+                        <h5>La sortie est en cours</h5>
+                    </div>
+                {% endif %}
+                {% if(sortie.etat.libelle == "Annulée") %}
+                    <div>
+                        <h5>La sortie a été annulée</h5>
+                    </div>
+                {% endif %}
+                {% if(sortie.etat.libelle == "Terminée") %}
+                    <div>
+                        <h5>La sortie est déjà terminée</h5>
+                    </div>
+                {% endif %}
+            {% endif %}
+            {% if(app.user == sortie.organisateur) %}
+                <a href="supprimerSortie.html.twig" class="btn btn-primary">Supprimer la sortie</a>
+                <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}" class="btn btn-primary">Modifier la sortie</a>
+            {% endif %}
         </div>
     </div>
     <br>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -46,7 +47,7 @@ class SortieController extends AbstractController
         }
         $sortie->setOrganisateur($this->getUser());
         $etat = new Etat("1");
-        $etat->setLibelle("Créée");
+        $etat->setLibelle("Ouverte");
         $sortie->setEtat($etat);
 
         $sortieForm->handleRequest($request);
@@ -94,5 +95,67 @@ class SortieController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/modifier/{id}", name="modifierSortie")
+     */
+    public function modifierSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
+    {
+        if (!$sortie) {
+            throw $this->createNotFoundException(
+                'Pas de sortie avec cet identifiant'
+            );
+        }
+        $sortieForm = $this->createForm(SortieType::class, $sortie);
+        $sortieForm->handleRequest($request);
+
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie modifiée avec succès !');
+            return $this->redirectToRoute('main_home', ['id' => $sortie->getId()]);
+        }
+
+        return $this->render('sortie/modifierSortie.html.twig', [
+            'sortieForm' => $sortieForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/supprimer/{id}", name="supprimerSortie")
+     */
+    public function supprimerSortie(Sortie $sortie, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($sortie);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Sortie supprimée avec succès !');
+
+        return $this->redirectToRoute('main_home');
+    }
+
+    /**
+     * @Route("/desistement/{id}", name="desistementSortie")
+     */
+    public function desistementSortie($id, EntityManagerInterface $entityManager): Response
+    {
+        $sortie = $entityManager->getRepository(Sortie::class)->find($id);
+
+        if (!$sortie) {
+            throw $this->createNotFoundException(
+                'Pas de sortie avec cet identifiant'
+            );
+        }
+
+        $participant = $this->getUser();
+        $sortie->removeParticipant($participant);
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Désistement validé !');
+
+        return $this->redirectToRoute('main_home',['id' => $id]);
+    }
 
 }
