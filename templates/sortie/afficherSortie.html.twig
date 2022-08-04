@@ -41,27 +41,30 @@
     </div>
     <br>
     <br>
-    <h4>Liste des participants inscrits :</h4>
-    <table class="table table-hover">
-        <thead>
-        <tr class="table-primary">
-            <th scope="col">Pseudo</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Profil</th>
-        </tr>
-        </thead>
-        <tbody>
 
-        {% for participant in sortie.participants %}
-            <tr>
-                <td>{{ participant.pseudo }}</td>
-                <td>{{ participant.prenom }}{{ participant.nom }} </td>
-                <td><a href="{{ path('afficherProfil', {'id': participant.id}) }}">Afficher</a></td>
+    {% if(sortie.participants.count > 0) %}
+        <h4>Liste des participants inscrits :</h4>
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">Pseudo</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Profil</th>
             </tr>
-        {% endfor %}
-
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for participant in sortie.participants %}
+                    <tr>
+                        <td>{{ participant.pseudo }}</td>
+                        <td>{{ participant.prenom }}{{ participant.nom }} </td>
+                        <td><a href="{{ path('afficherProfil', {'id': participant.id}) }}">Afficher</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <h3>Aucun participant inscrit pour l'instant</h3>
+            {% endif %}
+            </tbody>
+        </table>
     <br>
     <br>
 

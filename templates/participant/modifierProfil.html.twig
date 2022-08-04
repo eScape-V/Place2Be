@@ -6,12 +6,12 @@
 
 {% block body %}
     <h2>Mon profil</h2>
-    <div>
+    <div class="profil">
         <div>
             {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button>Enregistrer</button>
-            <button type="reset">Annuler</button>
+            <button class="btn btn-primary">Enregistrer</button>
+            <button class="btn btn-primary" type="reset">Annuler</button>
             {{ form_end(form) }}
             {% if(app.user.imageName) %}
                 <div><img src="{{ asset('uploads/pictures/'~app.user.imageName) }}" alt="Pas d'image uploadée"></div>
