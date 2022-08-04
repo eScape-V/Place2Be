@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="profil">
+        <h2>Ajouter un lieu</h2>
+        {{ form_start(lieuForm) }}
+        {{ form_widget(lieuForm) }}
+        <div>
+            <br>
+            <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+            <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
+        </div>
+        {{ form_end(lieuForm) }}
+    </div>
+{% endblock %}
+
+{% block title %}{{ parent() }} | Ajouter lieu{% endblock %}
+
