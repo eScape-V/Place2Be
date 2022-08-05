@@ -1,71 +1,77 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if(app.user.actif) %}
-    <h2>Liste des sorties</h2>
-    <div class="table-container">
-        <table class="table table-hover">
-            <thead class="thead2">
-            <tr class="table-primary">
-                <th scope="col" class="thnomsortie">Nom de la sortie</th>
-                <th scope="col">Date de la sortie</th>
-                <th scope="col" class="thcloture">Clôture</th>
-                <th scope="col" class="thplaces">Inscrits/Places</th>
-                <th scope="col" class="thetat">Etat</th>
-                <th scope="col" class="thinscrit">Inscrit</th>
-                <th scope="col">Organisateur</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+    {% if app.user %}
+        {% if(app.user.actif == 1) %}
+        <h2>Liste des sorties</h2>
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead class="thead2">
+                <tr class="table-primary">
+                    <th scope="col" class="thnomsortie">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col" class="thcloture">Clôture</th>
+                    <th scope="col" class="thplaces">Inscrits/Places</th>
+                    <th scope="col" class="thetat">Etat</th>
+                    <th scope="col" class="thinscrit">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
 
-            {% for sortie in sorties %}
-                {% if(sortie.dateLimiteInscription > date('-30days')) %}
-                    <tr>
-                        <td class="thnomsortie">{{ sortie.nom }}</td>
-                        <td>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
-                        <td class="thcloture">{{ sortie.dateLimiteInscription | date('d/m/Y')}}</td>
-                        <td class="thplaces">{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
-                        <td class="thetat">{{ sortie.etat.getLibelle() }}</td>
-                        <td class="thinscrit">{% if(sortie.participants.contains(app.user)) %}
-                                X
-                            {% endif %}
-                        </td>
-                        <td><a href="{{ path('afficherProfil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
-                        <td><a href="{{ path('sortie_afficherSortie', {'id': sortie.id}) }}">Afficher</a>
-                            {% if(sortie.participants.contains(app.user)) %}
-                                - <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}">Se désister</a>
-                            {% else %}
-                                {% if(sortie.etat.libelle == "Ouverte" and sortie.dateLimiteInscription > date()) %}
-                                    - <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}">S'inscrire</a>
+                {% for sortie in sorties %}
+                    {% if(sortie.dateLimiteInscription > date('-30days')) %}
+                        <tr>
+                            <td class="thnomsortie">{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
+                            <td class="thcloture">{{ sortie.dateLimiteInscription | date('d/m/Y')}}</td>
+                            <td class="thplaces">{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
+                            <td class="thetat">{{ sortie.etat.getLibelle() }}</td>
+                            <td class="thinscrit">{% if(sortie.participants.contains(app.user)) %}
+                                    X
                                 {% endif %}
-                            {% endif %}
-                            {% if(sortie.organisateur == app.user) %}
-                                - <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}">Modifier</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
+                            </td>
+                            <td><a href="{{ path('afficherProfil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                            <td><a href="{{ path('sortie_afficherSortie', {'id': sortie.id}) }}">Afficher</a>
+                                {% if(sortie.participants.contains(app.user)) %}
+                                    - <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}">Se désister</a>
+                                {% else %}
+                                    {% if(sortie.etat.libelle == "Ouverte" and sortie.dateLimiteInscription > date()) %}
+                                        - <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}">S'inscrire</a>
+                                    {% endif %}
+                                {% endif %}
+                                {% if(sortie.organisateur == app.user) %}
+                                    - <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}">Modifier</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
 
-            </tbody>
-        </table>
-        <br>
-        <div class="creerSortie">
-            <a href="{{ path('sortie_creerSortie') }}" class="btn btn-primary">Créer une sortie</a>
+                </tbody>
+            </table>
+            <br>
+            <div class="creerSortie">
+                <a href="{{ path('sortie_creerSortie') }}" class="btn btn-primary">Créer une sortie</a>
+            </div>
+            <br>
+        <div>
+            <h6><a href="{{ path('lieu_ajouter') }}">Ajouter un lieu</a></h6>
         </div>
-        <br>
-    <div>
-        <h6><a href="{{ path('lieu_ajouter') }}">Ajouter un lieu</a></h6>
-    </div>
-    </div>
+        </div>
+        {% else %}
+            <br>
+            <div>
+               <h3>Votre compte a été désactivé, veuillez contacter l'administrateur</h3>
+            </div>
+            <div>
+                <h4>admin@place2be.fr</h4>
+            </div>
+    {% endif %}
     {% else %}
-        <br>
         <div>
-           <h3>Votre compte a été désactivé, veuillez contacter l'administrateur</h3>
-        </div>
-        <div>
-            <h4>admin@place2be.fr</h4>
+            <h2>Veuillez vous connecter</h2>
         </div>
     {% endif %}
 {% endblock %}
