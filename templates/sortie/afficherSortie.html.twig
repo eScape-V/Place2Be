@@ -64,7 +64,9 @@
                 {% if(sortie.etat.libelle == "Annulée") %}
                     <div>
                         <h5>La sortie a été annulée</h5>
+                        <h6>Motif : {{ sortie.motif }}</h6>
                     </div>
+                    <br>
                 {% endif %}
                 {% if(sortie.etat.libelle == "Terminée") %}
                     <div>

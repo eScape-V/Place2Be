@@ -78,6 +78,11 @@ class Sortie
      */
     private $lieu;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $motif;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -231,6 +236,18 @@ class Sortie
     public function setLieu(?Lieu $lieu): self
     {
         $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getMotif(): ?string
+    {
+        return $this->motif;
+    }
+
+    public function setMotif(?string $motif): self
+    {
+        $this->motif = $motif;
 
         return $this;
     }

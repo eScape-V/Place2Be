@@ -184,11 +184,9 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'Sortie annulée avec succès !');
             return $this->redirectToRoute('main_home', ['id' => $sortie->getId()]);
         }
-        $motif = $sortieForm->get('motif')->getData();
 
         return $this->render('sortie/annulerSortie.html.twig', [
             "sortie" => $sortie,
-            "motif" => $motif,
             'sortieForm' => $sortieForm->createView()
         ]);
     }
