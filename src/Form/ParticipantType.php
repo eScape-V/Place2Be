@@ -61,6 +61,7 @@ class ParticipantType extends AbstractType
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'Conditions d\'utilisation',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Veuillez accepter les conditions.',

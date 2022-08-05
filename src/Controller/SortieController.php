@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Form\SortieAnnulerType;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -156,6 +157,40 @@ class SortieController extends AbstractController
         $this->addFlash('success', 'Désistement validé !');
 
         return $this->redirectToRoute('main_home',['id' => $id]);
+    }
+
+    /**
+     * @Route("/annuler/{id}", name="annulerSortie")
+     */
+    public function annulerSortie(Request $request, int $id, EntityManagerInterface $entityManager)
+    {
+        $sortie = $entityManager->getRepository(Sortie::class)->find($id);
+
+        if (!$sortie) {
+            throw $this->createNotFoundException(
+                'Pas de sortie avec cet identifiant'
+            );
+        }
+        $sortieForm = $this->createForm(SortieAnnulerType::class, $sortie);
+        $sortieForm->handleRequest($request);
+
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            $etat = $sortie->getEtat();
+            $etat->setLibelle("Annulée");
+            $sortie->setEtat($etat);
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie annulée avec succès !');
+            return $this->redirectToRoute('main_home', ['id' => $sortie->getId()]);
+        }
+        $motif = $sortieForm->get('motif')->getData();
+
+        return $this->render('sortie/annulerSortie.html.twig', [
+            "sortie" => $sortie,
+            "motif" => $motif,
+            'sortieForm' => $sortieForm->createView()
+        ]);
     }
 
 }

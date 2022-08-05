@@ -37,10 +37,6 @@
                             {% else %}
                                 {% if(sortie.etat.libelle == "Ouverte" and sortie.dateLimiteInscription > date()) %}
                                     - <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}">S'inscrire</a>
-                                {% else %}
-                                    {% if(sortie.dateLimiteInscription > date()) %}
-                                        - S'inscrire
-                                    {% endif %}
                                 {% endif %}
                             {% endif %}
                             {% if(sortie.organisateur == app.user) %}

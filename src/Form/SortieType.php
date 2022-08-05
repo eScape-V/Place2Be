@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
@@ -44,8 +46,8 @@ class SortieType extends AbstractType
                 'class'=> Campus::class,
                 'choice_label' => 'nom'
             ])
-            ->add('lieu', LieuType::class, [
-
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class
             ])
         ;
     }

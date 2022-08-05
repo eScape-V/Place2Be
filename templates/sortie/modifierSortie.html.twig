@@ -3,12 +3,16 @@
 {% block title %}{{ parent() }} | Modifier sortie{% endblock %}
 
 {% block body %}
-    <div>
-        {{ form_start(sortieForm) }}
-        {{ form_widget(sortieForm) }}
-        <button>Modifier sortie</button>
-        <button><a href="{{ path('main_home') }}">Annuler</a></button>
+    <h2>Modifier la sortie</h2>
+    <div class="profil">
+        <div>
+            {{ form_start(sortieForm) }}
+            {{ form_widget(sortieForm) }}
+            <br>
+            <button class="btn btn-primary">Enregistrer</button>
+            <button class="btn btn-primary" type="reset">Annuler</button>
 
-        {{ form_end(sortieForm) }}
+            {{ form_end(sortieForm) }}
+        </div>
     </div>
 {% endblock %}
