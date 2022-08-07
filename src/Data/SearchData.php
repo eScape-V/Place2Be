@@ -3,8 +3,9 @@
 namespace App\Data;
 
 use App\Entity\Campus;
+use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
-
+use phpDocumentor\Reflection\Types\Boolean;
 
 
 class SearchData
@@ -31,6 +32,10 @@ class SearchData
      */
     public $dateMin;
 
+    /**
+     * @ORM\Column(type="Participant::class", nullable=true)
+     */
+    public $organisateur;
 
 
 }

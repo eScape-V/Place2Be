@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Data\SearchData;
 use App\Entity\Campus;
+use App\Entity\Participant;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,9 +21,11 @@ class SearchForm extends AbstractType
         $builder
             ->add('campus', EntityType::class, [
                 'class'=> Campus::class,
-                'multiple' => true,
-                'expanded' => true,
-                'empty_data' => Campus::class
+                'label' => 'Campus',
+                'required' => false,
+//                'multiple' => true,
+//                'expanded' => true,
+//                'empty_data' => Campus::class,
 
             ])
             ->add('q', TextType::class, [
@@ -36,18 +40,18 @@ class SearchForm extends AbstractType
                 'html5' => true,
                 'label' => 'Date de début',
                 'required' => false,
-                'attr' => [
-                    'placeholder' => 'Date de début'
-                ]
             ])
             ->add('dateMax', DateTimeType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
                 'label' => 'Date de fin',
                 'required' => false,
-                'attr' => [
-                    'placeholder' => 'Date de fin'
-                ]
+
+            ])
+            ->add('organisateur', EntityType::class, [
+                'class'=> Participant::class,
+                'label' => 'Sorties dont je suis organisateur',
+                'required' => false,
             ])
 
 //            TODO: Ajouter les checkboxtypes

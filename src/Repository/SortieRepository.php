@@ -32,9 +32,8 @@ class SortieRepository extends ServiceEntityRepository
         //On récupère une requête avec la totalité
         $query = $this
             ->createQueryBuilder('s')
-            ->select('c','s')
-            ->join('s.campus', 'c')
-        ;
+            ->select('c', 's')
+            ->join('s.campus', 'c');
 
         //Filtrer avec les campus
         if (!empty($searchData->campus)) {
@@ -57,7 +56,6 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateMin', $searchData->dateMin);
         }
 
-
         //Filtrer avec la date maximale
         if (!empty($searchData->dateMax)) {
             $query = $query
@@ -65,37 +63,8 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateMax', $searchData->dateMax);
         }
 
-
-
         return $query->getQuery()->getResult();
-
-
-//        Option qui marche que pour recherche si campus
-
-//        $qb = $this->createQueryBuilder('p')
-//
-////            ->andWhere('p.campus = :campus')
-////            ->setParameter('campus', $searchData->campus)
-////            ->orderBy('p.campus', 'ASC');
-//
-//
-//        $query = $qb->getQuery();
-//
-//        return $query->execute();
-
     }
-
-//    public function findByCampus(int $id)
-//    {
-//        $queryBuilder = $this->createQueryBuilder('s');
-//        $queryBuilder->andWhere('s.campus = '.$id);
-//        $queryBuilder->addOrderBy('s.nom','DESC');
-//        $query = $queryBuilder->getQuery(); $query->setMaxResults(50);
-//        $results = $query->getResult();
-//
-//        return $results;
-//
-//    }
 
     public function add(Sortie $entity, bool $flush = false): void
     {

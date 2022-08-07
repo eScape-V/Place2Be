@@ -1,23 +1,59 @@
 
+{#{{ form_start(form) }}#}
+{#<div class="container">#}
+{#    <div class="container row bg-secondary text-white" style="width: 69em; margin-top: 0.5em">#}
+{#        {{ form_row(form.campus) }}#}
+{#    </div>#}
+{#    <div class="container row bg-primary text-white" style="width: 69em; margin-top: 0.5em">#}
+
+{#        <div class="col">#}
+{#            <h7>Le nom de la sortie contient:</h7>#}
+{#            {{ form_row(form.q) }}#}
+{#        </div>#}
+{#        <div class="col">#}
+{#            {{ form_row(form.dateMin) }}#}
+{#        </div>#}
+{#        <div class="col">#}
+{#            {{ form_row(form.dateMax) }}#}
+{#        </div>#}
+{#        <div class="col">#}
+{#            {{ form_row(form.organisateur) }}#}
+{#        </div>#}
+{#        <div class="col">#}
+{#            <button type="submit" class="btn btn-primary bg-secondary" style="margin-top: 1.5em">Chercher</button>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#{{ form_end(form) }}#}
+
 {{ form_start(form) }}
 <div class="container">
-    <div class="row bg-secondary text-white" style="width: 80em; margin-top: 0.5em">
-        {{ form_row(form.campus) }}
-    </div>
-    <div class="row bg-primary text-white" style="width: 80em; margin-top: 0.5em">
+    <div class="row bg-secondary text-white" style="width: 69em; margin-top: 0.5em">
 
-        <div class="col">
-            <h7>Le nom de la sortie contient:</h7>
-            {{ form_row(form.q) }}
+        <div class="col-md-3">
+            <div>
+                {{ form_row(form.campus) }}
+            </div>
+            <div>
+                <h7>Le nom de la sortie contient:</h7>
+                {{ form_row(form.q) }}
+            </div>
         </div>
         <div class="col">
-            {{ form_row(form.dateMin) }}
+            <div>
+                {{ form_row(form.dateMin) }}
+            </div>
         </div>
         <div class="col">
+            <div>
             {{ form_row(form.dateMax) }}
+            </div>
+        </div>
+        <div class="col-md-3">
+            {{ form_row(form.organisateur) }}
         </div>
         <div class="col">
-            <button type="submit" class="btn btn-primary bg-secondary" style="margin-top: 1.5em">Chercher</button>
+            <button type="submit" class="btn btn-primary bg-primary" style="margin-top: 1.5em">Chercher</button>
         </div>
     </div>
 </div>
