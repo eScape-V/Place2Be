@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,6 +22,83 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
+
+    /**
+     * @return Sortie[]
+     */
+    public function findSearch(SearchData $searchData): array
+    {
+
+        //On récupère une requête avec la totalité
+        $query = $this
+            ->createQueryBuilder('s')
+            ->select('c','s')
+            ->join('s.campus', 'c')
+        ;
+
+        //Filtrer avec les campus
+        if (!empty($searchData->campus)) {
+            $query = $query
+                ->andWhere('c.id IN (:campus)')
+                ->setParameter('campus', $searchData->campus);
+        } elseif (($searchData->campus) == 0) {
+            $query = $query;
+        }
+
+        //Filtrer avec la barre de recherche
+        if (!empty($searchData->q)) {
+            $query = $query
+                ->andWhere('s.nom LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%");
+        }
+
+//        //Filtrer avec la date minimale
+//        if (!empty($searchData->dateMin)) {
+//            $query = $query
+//                ->andWhere('s.dateHeureDebut >= :dateMin')
+//                ->setParameter('dateMin', "%{$searchData-> new Datetime(dateMin)}%");
+//        }
+//
+//
+//        //Filtrer avec la date maximale
+//        if (!empty($searchData->dateMax)) {
+//            $query = $query
+//                ->andWhere('s.dateHeureDebut <= :dateMax')
+//                ->setParameter('dateMax', "%{$searchData->dateMax}%");
+//        }
+
+
+
+        return $query->getQuery()->getResult();
+
+
+//        Option qui marche que pour recherche si campus
+
+//        $qb = $this->createQueryBuilder('p')
+//
+////            ->andWhere('p.campus = :campus')
+////            ->setParameter('campus', $searchData->campus)
+////            ->orderBy('p.campus', 'ASC');
+//
+//
+//        $query = $qb->getQuery();
+//
+//        return $query->execute();
+
+    }
+
+//    public function findByCampus(int $id)
+//    {
+//        $queryBuilder = $this->createQueryBuilder('s');
+//        $queryBuilder->andWhere('s.campus = '.$id);
+//        $queryBuilder->addOrderBy('s.nom','DESC');
+//        $query = $queryBuilder->getQuery(); $query->setMaxResults(50);
+//        $results = $query->getResult();
+//
+//        return $results;
+//
+//    }
+
     public function add(Sortie $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -39,28 +117,4 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Sortie[] Returns an array of Sortie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Sortie
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
