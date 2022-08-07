@@ -391,10 +391,6 @@ label {
   text-align:left;
 }
 
-input, select {
-  margin-left: -20px;
-}
-
 form {
   justify-content: center;
 }

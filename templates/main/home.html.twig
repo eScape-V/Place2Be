@@ -3,16 +3,14 @@
 
 
 {% block body %}
-
-{#    <div style="margin-right: 60em">#}
-    <div style="margin-right: 60em" class="form-group">
-        {% include 'inc/filter.html.twig' with {form: form} only %}
-    </div>
-
     {% if app.user %}
         {% if app.user.actif == true %}
-        <h2 style="margin-top: 0.1em">Liste des sorties</h2>
-        <div class="table-container" style="margin-top: -3em">
+    {#    <div style="margin-right: 60em">#}
+        <div style="margin-right: 60em" class="form-group">
+            {% include 'inc/filter.html.twig' with {form: form} only %}
+        </div>
+        <h2>Liste des sorties</h2>
+        <div class="table-container">
             <table class="table table-hover">
                 <thead class="thead2">
                 <tr class="table-primary">
