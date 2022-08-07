@@ -32,18 +32,16 @@ class SearchForm extends AbstractType
                 ]
             ])
             ->add('dateMin', DateTimeType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
                 'label' => 'Date de début',
                 'required' => false,
-                'attr' => [
-                    'placeholder' => 'Date de début'
-                ]
             ])
             ->add('dateMax', DateTimeType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
                 'label' => 'Date de fin',
                 'required' => false,
-                'attr' => [
-                    'placeholder' => 'Date de fin'
-                ]
             ])
 
 //            TODO: Ajouter les checkboxtypes

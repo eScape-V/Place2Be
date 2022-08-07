@@ -30,7 +30,7 @@ class Campus
     private $participants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="campus")
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="campus", cascade={"persist"})
      */
     private $sortie;
 
