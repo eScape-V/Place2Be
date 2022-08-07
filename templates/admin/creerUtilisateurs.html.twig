@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="profil">
+        <h2>Créer un utilisateur</h2>
+        {{ form_start(participantForm) }}
+        {{ form_widget(participantForm) }}
+        <br>
+        <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+        <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
+        {{ form_end(participantForm) }}
+    </div>
+{% endblock %}
+
+{% block title %}{{ parent() }} | Créer utilisateur{% endblock %}
+

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Liste des utilisateurs</h2>
+    <div class="table-container">
+        <table class="table table-hover">
+            <thead class="thead2">
+            <tr class="table-primary">
+                <th scope="col">Pseudo</th>
+                <th scope="col">Email</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col" class="thinscrit">Actif</th>
+                <th scope="col">Campus</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>{{ utilisateur.pseudo }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.telephone }}</td>
+                    <td class="thinscrit">{% if(utilisateur.actif) %}
+                            X
+                        {% endif %}
+                    </td>
+                    <td>{{ utilisateur.campus.nom }}</td>
+                    <td><a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}">Afficher</a>
+                        - <a href="{{ path('admin_modifierUtilisateur', {'id': utilisateur.id}) }}">Modifier</a>
+                        - <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td class="thnomsortie"></td>
+                <td><a href="{{ path('admin_creerUtilisateur') }}">Ajouter</a>
+            </tr>
+            </tbody>
+        </table>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | Liste des utilisateurs
+{% endblock %}
+

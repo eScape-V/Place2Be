@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Modifier le campus</h2>
+    <div class="profil">
+        <div>
+            {{ form_start(campusForm) }}
+            {{ form_widget(campusForm) }}
+            <br>
+            <button class="btn btn-primary">Enregistrer</button>
+            <button class="btn btn-primary" type="reset">Annuler</button>
+
+            {{ form_end(campusForm) }}
+        </div>
+    </div>
+
+    {% endblock %}
+
+{% block title %}
+    {{ parent() }} | Modifier campus
+{% endblock %}

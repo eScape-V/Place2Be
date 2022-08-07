@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
         $participant = new Participant();
         //Affectation du ROLE USER par défaut, et Administrateur et Actif sur false par défaut lors de l'inscription
         $participant->setAdministrateur(false);
-        $participant->setActif(false);
+        $participant->setActif(true);
         $participant->setRoles(["ROLE_USER"]);
 
         $form = $this->createForm(RegistrationFormType::class, $participant);
