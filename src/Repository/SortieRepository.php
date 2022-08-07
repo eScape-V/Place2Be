@@ -41,8 +41,6 @@ class SortieRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('c.id IN (:campus)')
                 ->setParameter('campus', $searchData->campus);
-        } elseif (($searchData->campus) == 0) {
-            $query = $query;
         }
 
         //Filtrer avec la barre de recherche
@@ -52,20 +50,20 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('q', "%{$searchData->q}%");
         }
 
-//        //Filtrer avec la date minimale
-//        if (!empty($searchData->dateMin)) {
-//            $query = $query
-//                ->andWhere('s.dateHeureDebut >= :dateMin')
-//                ->setParameter('dateMin', "%{$searchData-> new Datetime(dateMin)}%");
-//        }
-//
-//
-//        //Filtrer avec la date maximale
-//        if (!empty($searchData->dateMax)) {
-//            $query = $query
-//                ->andWhere('s.dateHeureDebut <= :dateMax')
-//                ->setParameter('dateMax', "%{$searchData->dateMax}%");
-//        }
+        //Filtrer avec la date minimale
+        if (!empty($searchData->dateMin)) {
+            $query = $query
+                ->andWhere('s.dateHeureDebut >= :dateMin')
+                ->setParameter('dateMin', $searchData->dateMin);
+        }
+
+
+        //Filtrer avec la date maximale
+        if (!empty($searchData->dateMax)) {
+            $query = $query
+                ->andWhere('s.dateHeureDebut <= :dateMax')
+                ->setParameter('dateMax', $searchData->dateMax);
+        }
 
 
 

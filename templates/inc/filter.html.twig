@@ -1,33 +1,4 @@
 
-
-{#    <div class="table-container">#}
-{#        <table class="table" style="width: 80em">#}
-{#            <thead>#}
-{#                {{ form_start(form) }}#}
-{#                    <tr class="table-secondary">#}
-{#                        <th>#}
-{#                            <h7>Campus</h7>#}
-{#                            {{ form_row(form.campus) }}#}
-{#                        </th>#}
-{#                        <th>#}
-{#                            <h7>Le nom de la sortie contient:</h7>#}
-{#                            {{ form_row(form.q) }}#}
-{#                        </th>#}
-{#                        <th>#}
-{#                            {{ form_row(form.dateMin)}}#}
-{#                        </th>#}
-{#                        <th>#}
-{#                            {{ form_row(form.dateMax)}}#}
-{#                        </th>#}
-{#                        <th>#}
-{#                            <button type="submit" class="btn btn-primary">Chercher</button>#}
-{#                        </th>#}
-{#                    </tr>#}
-{#            </thead>#}
-{#        </table>#}
-{#    {{ form_end(form) }}#}
-{#    </div>#}
-
 {{ form_start(form) }}
 <div class="container">
     <div class="row bg-secondary text-white" style="width: 80em; margin-top: 0.5em">
@@ -40,10 +11,10 @@
             {{ form_row(form.q) }}
         </div>
         <div class="col">
-            {{ form_row(form.dateMin)}}
+            {{ form_row(form.dateMin) }}
         </div>
         <div class="col">
-            {{ form_row(form.dateMax)}}
+            {{ form_row(form.dateMax) }}
         </div>
         <div class="col">
             <button type="submit" class="btn btn-primary bg-secondary" style="margin-top: 1.5em">Chercher</button>
@@ -51,8 +22,3 @@
     </div>
 </div>
 {{ form_end(form) }}
-
-{#<table class="table" style="width: 80em">#}
-{#    <thead>#}
-
-{#    <tr class="table-secondary">#}

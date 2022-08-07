@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Data\SearchData;
 use App\Entity\Campus;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -21,7 +22,7 @@ class SearchForm extends AbstractType
                 'class'=> Campus::class,
                 'multiple' => true,
                 'expanded' => true,
-                'empty_data' => Campus::class
+                'empty_data' => Campus::class,
 
             ])
             ->add('q', TextType::class, [
@@ -34,6 +35,8 @@ class SearchForm extends AbstractType
             ->add('dateMin', DateTimeType::class, [
                 'label' => 'Date de début',
                 'required' => false,
+                'html5' => true,
+//                'format' => 'dd-MM-yyyy',
                 'attr' => [
                     'placeholder' => 'Date de début'
                 ]
