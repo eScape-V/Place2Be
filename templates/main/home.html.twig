@@ -21,6 +21,7 @@
                     <th scope="col" class="thetat">Etat</th>
                     <th scope="col" class="thinscrit">Inscrit</th>
                     <th scope="col">Organisateur</th>
+                    <th scope="col" style="width: 20px"></th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -39,6 +40,11 @@
                                 {% endif %}
                             </td>
                             <td><a href="{{ path('afficherProfil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                            <td style="width: 20px;">
+                                {% if sortie.organisateur.imageName %}
+                                    <img class="vignette"  src="{{ asset('uploads/pictures/'~sortie.organisateur.imageName) }}" alt="" >
+                                {% endif %}
+                            </td>
                             <td><a href="{{ path('sortie_afficherSortie', {'id': sortie.id}) }}">Afficher</a>
                                 {% if(sortie.participants.contains(app.user)) %}
                                     - <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}">Se désister</a>
@@ -49,6 +55,9 @@
                                 {% endif %}
                                 {% if(sortie.organisateur == app.user) %}
                                     - <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}">Modifier</a>
+                                    {% if sortie.etat.libelle == "Créée" %}
+                                        - <a href="{{ path('sortie_publierSortie', {'id': sortie.id}) }}">Publier</a>
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         </tr>
@@ -62,9 +71,6 @@
                 <a href="{{ path('sortie_creerSortie') }}" class="btn btn-primary">Créer une sortie</a>
             </div>
             <br>
-        <div>
-            <h6><a href="{{ path('lieu_ajouter') }}">Ajouter un lieu</a></h6>
-        </div>
         </div>
         {% else %}
             <br>

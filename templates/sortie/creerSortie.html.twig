@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="profil">
     <h2>Créer une sortie</h2>
+    <div class="d-flex justify-content-center" style="text-align: center">
     {{ form_start(sortieForm) }}
-    {{ form_widget(sortieForm) }}
-        <br>
-        <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
-        <button type="submit" class="btn btn-primary btn-lg">Publier</button>
-        <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
+        {{ form_widget(sortieForm) }}
     {{ form_end(sortieForm) }}
     </div>
 {% endblock %}

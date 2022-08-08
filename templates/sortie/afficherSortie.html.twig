@@ -74,6 +74,12 @@
                     </div>
                 {% endif %}
             {% endif %}
+            {% if(app.user == sortie.organisateur) and (sortie.etat.libelle == "Créée") %}
+                <div>
+                    <a href="{{ path('sortie_publierSortie', {'id': sortie.id}) }}" class="btn btn-primary">Publier la sortie</a>
+                </div>
+                <br>
+            {% endif %}
             {% if(app.user == sortie.organisateur) or (app.user.administrateur) %}
                 <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}" class="btn btn-primary">Modifier la sortie</a>
                 {% if (sortie.etat.libelle != "Annulée") %}

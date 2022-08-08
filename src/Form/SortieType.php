@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +26,8 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom de la sortie'
+                'label' => 'Nom de la sortie',
+
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie',
@@ -38,12 +40,17 @@ class SortieType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => true,
+                'attr' => array('class' => 'smallBtn')
+
             ])
             ->add('nbInscriptionsMax', NumberType::class, [
-                'label' => 'Nombre de places'
+                'label' => 'Nombre de places',
+                'attr' => array('style' => 'width: 80px; align-self: center')
             ])
             ->add('duree', NumberType::class, [
-                'label' => 'Durée (minutes)'
+                'label' => 'Durée (minutes)',
+                'attr' => array('style' => 'width: 80px')
+
             ])
             ->add('infosSortie', TextareaType::class, [
                 'label' => 'Description et infos'
@@ -55,6 +62,9 @@ class SortieType extends AbstractType
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class
             ])
+            ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
+            ->add('publier', SubmitType::class, ['label' => 'Publier'])
+            ->add('annuler', SubmitType::class, ['label' => 'Annuler'])
         ;
     }
 

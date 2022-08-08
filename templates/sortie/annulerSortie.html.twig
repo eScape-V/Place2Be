@@ -4,7 +4,7 @@
 
 {% block body %}
     <h2>Annuler la sortie</h2>
-    <div class="profil">
+    <div class="d-flex justify-content-center">
         <div>
             <div>Nom de la sortie : {{ sortie.nom }}</div>
             <div>Date de la sortie : {{ sortie.dateHeureDebut|date('d-m-Y') }}</div>
@@ -13,10 +13,10 @@
             <br>
             {{ form_start(sortieForm) }}
             {{ form_widget(sortieForm) }}
-            <br>
-            <button class="btn btn-primary">Enregistrer</button>
-            <button class="btn btn-primary" type="reset">Annuler</button>
-
+            <div style="text-align: center">
+                <button class="btn btn-primary">Enregistrer</button>
+                <button class="btn btn-primary" type="reset">Annuler</button>
+            </div>
             {{ form_end(sortieForm) }}
         </div>
     </div>

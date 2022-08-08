@@ -1,7 +1,13 @@
+.vignette {
+    border-radius: 30px;
+    width: 28px;
+    height: 40px;
+    margin-left: 10px;
+    align-items: end;
+}
+
 img {
     width: 150px;
-    padding: 0px;
-    margin: 0px;
 }
 
 body {
@@ -36,6 +42,7 @@ body > .container {
 
 main {
     flex: 1;
+    min-height: 900px;
 }
 
 
@@ -131,7 +138,8 @@ button {
 }
 
 .profil {
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .sortie {
@@ -140,4 +148,8 @@ button {
 
 .tdAjouter {
     width: 75px;
+}
+
+#submit {
+    display: inline-flex;
 }

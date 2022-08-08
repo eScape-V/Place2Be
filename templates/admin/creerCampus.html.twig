@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="profil">
-        <h2>Créer un campus</h2>
+    <h2>Créer un campus</h2>
+    <div class="d-flex justify-content-center">
         {{ form_start(campusForm) }}
         {{ form_widget(campusForm) }}
         <br>
-        <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
-        <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
+        <div style="text-align: center">
+            <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+            <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
+        </div>
         {{ form_end(campusForm) }}
     </div>
 {% endblock %}

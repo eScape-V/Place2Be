@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="profil">
-        <h2>Ajouter un lieu</h2>
+    <h2>Ajouter un lieu</h2>
+    <div class="d-flex justify-content-center">
         {{ form_start(lieuForm) }}
         {{ form_widget(lieuForm) }}
-        <div>
+        <div style="text-align: center">
             <br>
             <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
             <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
         </div>
-        {{ form_end(lieuForm) }}
+    {{ form_end(lieuForm) }}
     </div>
 {% endblock %}
 

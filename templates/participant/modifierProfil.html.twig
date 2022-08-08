@@ -6,7 +6,7 @@
 
 {% block body %}
     <h2>Mon profil</h2>
-    <div class="profil">
+    <div class="d-flex justify-content-center">
         <div>
             {{ form_start(form) }}
             {{ form_widget(form) }}
@@ -15,8 +15,10 @@
                     <h5><img src="{{ asset('uploads/pictures/'~app.user.imageName) }}" alt="Pas d'image uploadée"></h5>
                 </div>
             {% endif %}
-            <button class="btn btn-primary">Enregistrer</button>
-            <button class="btn btn-primary" type="reset">Annuler</button>
+            <div style="text-align: center">
+                <button class="btn btn-primary">Enregistrer</button>
+                <button class="btn btn-primary" type="reset">Annuler</button>
+            </div>
             {{ form_end(form) }}
         </div>
     </div>

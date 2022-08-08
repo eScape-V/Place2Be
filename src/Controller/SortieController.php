@@ -39,25 +39,47 @@ class SortieController extends AbstractController
      */
     public function creerSortie(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $sortie = new Sortie();
-        $sortieForm = $this->createForm(SortieType::class, $sortie);
-
         if(!$this->getUser()) {
             $this->addFlash('error', 'Veuillez vous connecter pour créer une sortie');
             return $this->redirectToRoute('app_login');
         }
-        $sortie->setOrganisateur($this->getUser());
-        $etat = new Etat("1");
-        $etat->setLibelle("Ouverte");
-        $sortie->setEtat($etat);
+
+        $sortie = new Sortie();
+        $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
-            $entityManager->persist($sortie);
-            $entityManager->flush();
 
-            $this->addFlash('success', 'Sortie crée avec succès !');
+            $sortie->setOrganisateur($this->getUser());
+            $etat = new Etat();
+
+            if ($sortieForm->getClickedButton() === $sortieForm->get('enregistrer')){
+
+                $etat->setLibelle(Etat::CREEE);
+                $sortie->setEtat($etat);
+
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Sortie enregistée avec succès !');
+
+                return $this->redirectToRoute('sortie_afficherSortie', ['id' => $sortie->getId()]);
+            }
+
+            if ($sortieForm->getClickedButton() === $sortieForm->get('publier')){
+
+                $etat->setLibelle(Etat::OUVERTE);
+                $sortie->setEtat($etat);
+
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Sortie créée et publiée avec succès !');
+
+                return $this->redirectToRoute('sortie_afficherSortie', ['id'=>$sortie->getId()]);
+            }
+
 
             return $this->redirectToRoute('main_home');
 
@@ -131,6 +153,21 @@ class SortieController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', 'Sortie supprimée avec succès !');
+
+        return $this->redirectToRoute('main_home');
+    }
+
+    /**
+     * @Route("/publier/{id}", name="publierSortie")
+     */
+    public function publierSortie(Sortie $sortie, EntityManagerInterface $entityManager)
+    {
+        $etat = $sortie->getEtat();
+        $etat->setLibelle(Etat::OUVERTE);
+        $sortie->setEtat($etat);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Sortie publiée avec succès !');
 
         return $this->redirectToRoute('main_home');
     }
