@@ -4,12 +4,13 @@
 
 {% block body %}
     <h2>Créer un compte</h2>
-    <div class="form-group">
-    {{ form_start(registrationForm) }}
+    <div class="d-flex justify-content-center">
+        {{ form_start(registrationForm) }}
         {{ form_widget(registrationForm) }}
-        <br>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <button type="reset" class="btn btn-primary">Annuler</button>
-    {{ form_end(registrationForm) }}
+        <div style="text-align: center">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <button type="reset" class="btn btn-primary">Annuler</button>
+        </div>
+        {{ form_end(registrationForm) }}
     </div>
 {% endblock %}
