@@ -340,7 +340,7 @@ th {
 }
 
 .thinscrit {
-  width: 80px;
+  width: 34px;
 }
 
 .thetat {
@@ -3845,7 +3845,7 @@ textarea.form-control-lg {
 .navbar-brand {
   font-size: var(--bs-navbar-brand-font-size);
   color: var(--bs-navbar-brand-color);
-  text-decoration: none;
+  text-decoration: darkgrey;
   white-space: nowrap;
 }
 .navbar-brand:hover, .navbar-brand:focus {

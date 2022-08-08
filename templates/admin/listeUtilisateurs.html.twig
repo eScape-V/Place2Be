@@ -31,11 +31,13 @@
                     <td>{{ utilisateur.campus.nom }}</td>
                     <td><a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}">Afficher</a>
                         - <a href="{{ path('admin_modifierUtilisateur', {'id': utilisateur.id}) }}">Modifier</a>
-                        - <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a></td>
+                        - <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a>
+                        - <a href="{{ path('admin_desactiverUtilisateur', {'id': utilisateur.id}) }}">Désactiver</a></td>
+
                 </tr>
             {% endfor %}
             <tr>
-                <td class="thnomsortie"></td>
+                <td class="tdAjouter"></td>
                 <td><a href="{{ path('admin_creerUtilisateur') }}">Ajouter</a>
             </tr>
             </tbody>

@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Entity\Participant;
+use App\Entity\Ville;
 use App\Form\CampusType;
 use App\Form\ParticipantType;
+use App\Form\VilleType;
 use App\Repository\CampusRepository;
 use App\Repository\FileUploader;
 use App\Repository\ParticipantRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,14 +24,83 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
-    /**
-     * @Route("/villes", name="villes")
-     */
-    public function viles(): Response
-    {
 
-        return $this->render('admin/villes.html.twig',);
+    /**
+     * @Route("/listeVilles", name="listeVilles")
+     */
+    public function listeVilles(VilleRepository $villeRepository): Response
+    {
+        $listeVilles = $villeRepository->findAll();
+
+        return $this->render('admin/listeVilles.html.twig', [
+            "listeVilles" => $listeVilles
+        ]);
     }
+
+    /**
+     * @Route("/creerVille", name="creerVille")
+     */
+    public function creerVille(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $ville = new Ville();
+        $villeForm = $this->createForm(VilleType::class, $ville);
+
+        if (!$this->getUser()) {
+            $this->addFlash('error', 'Veuillez vous connecter pour ajouter une ville');
+            return $this->redirectToRoute('app_login');
+        }
+
+        $villeForm->handleRequest($request);
+
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+            $entityManager->persist($ville);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Ville ajoutée avec succès !');
+
+            return $this->redirectToRoute('admin_listeVilles');
+
+        }
+        return $this->render('admin/creerVille.html.twig', [
+            'villeForm' => $villeForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/modifierVille/{id}", name="modifierVille")
+     */
+    public function modifierVille(EntityManagerInterface $entityManager, Ville $ville, Request $request): Response
+    {
+        $villeForm = $this->createForm(VilleType::class, $ville);
+        $villeForm->handleRequest($request);
+
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+            $entityManager->persist($ville);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Ville modifiée avec succès !');
+            return $this->redirectToRoute('admin_listeVilles', ['id' => $ville->getId()]);
+        }
+
+        return $this->render('admin/modifierVille.html.twig', [
+            'villeForm' => $villeForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/supprimerVille/{id}", name="supprimerVille")
+     */
+
+    public function supprimerVille(Ville $ville, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($ville);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Ville supprimée avec succès !');
+
+        return $this->redirectToRoute('main_home');
+    }
+
 
     /**
      * @Route("/listeCampus", name="listeCampus")
@@ -200,6 +272,21 @@ class AdminController extends AbstractController
 
             $this->addFlash('success', 'Utilisateur supprimé avec succès !');
         }
+
+        return $this->redirectToRoute('admin_listeUtilisateurs');
+    }
+
+    /**
+     * @Route("/desactiverUtilisateur/{id}", name="desactiverUtilisateur")
+     */
+
+    public function desactiverUtilisateur(Participant $participant, EntityManagerInterface $entityManager)
+    {
+        $participant->setActif(false);
+        $entityManager->persist($participant);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Utilisateur désactivé avec succès !');
 
         return $this->redirectToRoute('admin_listeUtilisateurs');
     }

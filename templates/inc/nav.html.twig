@@ -13,7 +13,7 @@
                 </li>
                 {% if is_granted("ROLE_ADMIN") %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ path('admin_villes') }}">Villes
+                    <a class="nav-link active" href="{{ path('admin_listeVilles') }}">Villes
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
@@ -41,7 +41,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ path('modifierProfil', {'id': app.user.id}) }}">Mon profil
+                        <a class="nav-link active" href="{{ path('modifierProfil', {'id': app.user.id}) }}">Mon profil ({{ app.user.pseudo }})
                             <span class="visually-hidden">(current)</span>
                         </a>
                     </li>

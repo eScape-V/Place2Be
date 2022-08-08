@@ -8,7 +8,6 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
-use App\Repository\FileUploader;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
 use Doctrine\Persistence\ObjectManager;
@@ -108,7 +107,7 @@ class SortieFixtures extends Fixture
             $manager->persist($lieu[$i]);
         }
 
-        // Création de 4 états
+        // Création de 6 états
         $libelles = ['Créée', 'Ouverte', 'Clôturée', 'En cours', 'Terminée', 'Annulée'];
 
         $etat = [];
@@ -120,7 +119,7 @@ class SortieFixtures extends Fixture
             $manager->persist($etat[$i]);
         }
 
-        // Création de 10 campus dont le premier est par défaut
+        // Création de 5 campus dont le premier est par défaut
         $campus = [];
         $campus[0] = new Campus();
         $campus[0]->setNom('Non attribué');
@@ -146,6 +145,8 @@ class SortieFixtures extends Fixture
             $participant[$i]->setActif(true);
             $participant[$i]->setPseudo($faker->userName);
             $participant[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
+            $participant[$i]->setAdministrateur(false);
+            $participant[$i]->setImageName("$i.jpg");
             $participant[$i]->setRoles(["ROLE_USER"]);
 //
 //            $finder = new Finder();

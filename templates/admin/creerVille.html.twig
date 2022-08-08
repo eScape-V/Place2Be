@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="profil">
+        <h2>Ajouter une ville</h2>
+        {{ form_start(villeForm) }}
+        {{ form_widget(villeForm) }}
+        <br>
+        <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+        <button type="reset" class="btn btn-primary btn-lg">Annuler</button>
+        {{ form_end(villeForm) }}
+    </div>
+{% endblock %}
+
+{% block title %}{{ parent() }} | Ajouter ville{% endblock %}
+

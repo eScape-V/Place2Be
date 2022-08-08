@@ -137,3 +137,7 @@ button {
 .sortie {
     text-align: center;
 }
+
+.tdAjouter {
+    width: 75px;
+}
