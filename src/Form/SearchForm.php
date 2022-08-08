@@ -8,6 +8,7 @@ use App\Entity\Participant;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,8 +22,11 @@ class SearchForm extends AbstractType
         $builder
             ->add('campus', EntityType::class, [
                 'class'=> Campus::class,
-                'label' => 'Campus',
+                'label' => false,
                 'required' => false,
+                'attr' => [
+                    'style' => 'width: 69em'
+                ]
 //                'multiple' => true,
 //                'expanded' => true,
 //                'empty_data' => Campus::class,
@@ -32,27 +36,42 @@ class SearchForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher'
+                    'placeholder' => 'Rechercher',
+                    'style' => 'width: 69em'
                 ]
             ])
             ->add('dateMin', DateTimeType::class, [
+                'label' => false,
                 'widget' => 'single_text',
                 'html5' => true,
-                'label' => 'Date de début',
                 'required' => false,
+                'attr' => [
+                    'style' => 'width: 10em'
+                ]
             ])
             ->add('dateMax', DateTimeType::class, [
+                'label' => false,
                 'widget' => 'single_text',
                 'html5' => true,
-                'label' => 'Date de fin',
                 'required' => false,
+                'attr' => [
+                    'style' => 'width: 10em'
+                ]
 
             ])
-            ->add('organisateur', EntityType::class, [
-                'class'=> Participant::class,
-                'label' => 'Sorties dont je suis organisateur',
+            ->add('isOrganisateur', CheckboxType::class, [
+//                'class'=> Participant::class,
+                'value' => Participant::class,
+//                'data' => $builder.Participant::class,
+                'mapped' => false,
+                'label' => false,
+//                'label' => 'Sorties dont je suis organisateur',
                 'required' => false,
+                'attr' => [
+                    'style' => 'width: 1em'
+                ]
             ])
+
 
 //            TODO: Ajouter les checkboxtypes
         ;

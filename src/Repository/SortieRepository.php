@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Data\SearchData;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -61,6 +62,19 @@ class SortieRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('s.dateHeureDebut <= :dateMax')
                 ->setParameter('dateMax', $searchData->dateMax);
+        }
+
+        //Filtrer si l'utilisateur est organisateur
+        if (!empty($searchData->isOrganisateur)){
+//            $participant = $participantRepository;
+//            $participant = $this->getUser()->getSortie();
+//            $searchData = $participant;
+            $query = $query
+
+                ->andWhere('s.id IN (:$participant)')
+                ->setParameter('$participant', $searchData);
+//                ->andWhere('s.organisateur = :isOrganisateur')
+//                ->setParameter('isOrganisateur', $searchData->isOrganisateur);
         }
 
         return $query->getQuery()->getResult();

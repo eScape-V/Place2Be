@@ -33,9 +33,9 @@ class SearchData
     public $dateMin;
 
     /**
-     * @ORM\Column(type="Participant::class", nullable=true)
+     * @ORM\Column(targetEntity=Participant::class, nullable=true)
      */
-    public $organisateur;
+    public $isOrganisateur;
 
 
 }
