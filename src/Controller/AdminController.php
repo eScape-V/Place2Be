@@ -264,7 +264,7 @@ class AdminController extends AbstractController
 
     public function supprimerUtilisateur(Participant $participant, EntityManagerInterface $entityManager)
     {
-        if($participant->getOrganisateur() === true) {
+        if($participant->getOrganisateur() == true) {
             $this->addFlash('error', 'L\'utilisateur est l\'organisateur d\'une sortie !');
         } else {
             $entityManager->remove($participant);
