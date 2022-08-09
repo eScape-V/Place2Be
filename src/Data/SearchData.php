@@ -33,7 +33,7 @@ class SearchData
     public $dateMin;
 
     /**
-     * @ORM\Column(targetEntity=Participant::class, nullable=true)
+     * @ORM\Column(type="boolean")
      */
     public $isOrganisateur;
 

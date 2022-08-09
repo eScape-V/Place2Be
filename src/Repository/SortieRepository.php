@@ -6,7 +6,9 @@ use App\Data\SearchData;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -27,7 +29,7 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[]
      */
-    public function findSearch(SearchData $searchData): array
+    public function findSearch(SearchData $searchData, Participant $user): array
     {
 
         //On récupère une requête avec la totalité
@@ -65,16 +67,11 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         //Filtrer si l'utilisateur est organisateur
-        if (!empty($searchData->isOrganisateur)){
-//            $participant = $participantRepository;
-//            $participant = $this->getUser()->getSortie();
-//            $searchData = $participant;
-            $query = $query
+        if ($searchData->isOrganisateur == 1){
 
-                ->andWhere('s.id IN (:$participant)')
-                ->setParameter('$participant', $searchData);
-//                ->andWhere('s.organisateur = :isOrganisateur')
-//                ->setParameter('isOrganisateur', $searchData->isOrganisateur);
+                $query = $query
+                ->andWhere('s.organisateur = :organisateur')
+                ->setParameter('organisateur', $user->getId());
         }
 
         return $query->getQuery()->getResult();

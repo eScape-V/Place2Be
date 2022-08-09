@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Data\SearchData;
 use App\Entity\Campus;
 use App\Entity\Participant;
+use App\Repository\ParticipantRepository;
+use App\Repository\SortieRepository;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,6 +21,7 @@ class SearchForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+//        $id = $options['id'];
         $builder
             ->add('campus', EntityType::class, [
                 'class'=> Campus::class,
@@ -59,17 +62,14 @@ class SearchForm extends AbstractType
                 ]
 
             ])
+
             ->add('isOrganisateur', CheckboxType::class, [
-//                'class'=> Participant::class,
-                'value' => Participant::class,
-//                'data' => $builder.Participant::class,
-                'mapped' => false,
+                'value' => 1,
                 'label' => false,
-//                'label' => 'Sorties dont je suis organisateur',
                 'required' => false,
                 'attr' => [
                     'style' => 'width: 1em'
-                ]
+                ],
             ])
 
 
