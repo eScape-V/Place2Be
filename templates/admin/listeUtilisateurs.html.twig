@@ -22,7 +22,7 @@
                 <tr>
                     <td style="width: 30px;">
                         {% if utilisateur.imageName %}
-                            <img class="vignette"  src="{{ asset('uploads/pictures/'~utilisateur.imageName) }}" alt="" >
+                            <a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}" ><img class="vignette"  src="{{ asset('uploads/pictures/'~utilisateur.imageName) }}" alt="" ></a>
                         {% endif %}
                     </td>
                     <td>{{ utilisateur.pseudo }}</td>
@@ -38,9 +38,12 @@
                     <td style="width: 178px;"><a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}">Afficher</a>
                         - <a href="{{ path('admin_modifierUtilisateur', {'id': utilisateur.id}) }}">Modifier</a>
                         - <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a>
-                        - <a href="{{ path('admin_desactiverUtilisateur', {'id': utilisateur.id}) }}">Désactiver</a></td>
-
-                </tr>
+                        {% if utilisateur.actif %}
+                            - <a href="{{ path('admin_desactiverUtilisateur', {'id': utilisateur.id}) }}">Désactiver</a>
+                        {% else %}
+                            - <a href="{{ path('admin_activerUtilisateur', {'id': utilisateur.id}) }}">Activer</a>
+                        {% endif %}
+                    </td>
             {% endfor %}
             <tr>
                 <td class="tdAjouter"></td>

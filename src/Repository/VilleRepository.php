@@ -63,4 +63,18 @@ class VilleRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+
+
+        public function findAllByAsc(){
+            $entityManager = $this->getEntityManager();
+            $dql = "
+            SELECT v
+            FROM App\Entity\Ville v
+            ORDER BY v.nom ASC 
+            ";
+            $query = $entityManager->createQuery($dql);
+            $results = $query->getResult();
+
+            return $results;
+        }
+    }

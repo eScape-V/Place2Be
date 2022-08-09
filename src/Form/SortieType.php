@@ -6,8 +6,11 @@ use App\Entity\Campus;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Repository\CampusRepository;
+use App\Repository\LieuRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -56,17 +59,61 @@ class SortieType extends AbstractType
                 'label' => 'Description et infos'
             ])
             ->add('campus', EntityType::class, [
-                'class'=> Campus::class,
-                'choice_label' => 'nom'
+                'class' => Campus::class,
+                'choice_label' => 'nom',
+                'query_builder' => function (CampusRepository $campusRepository) {
+                    return $campusRepository->createQueryBuilder('campus')
+                        ->orderBy('campus.nom', 'ASC');
+                },
             ])
             ->add('lieu', EntityType::class, [
-                'class' => Lieu::class
+                'label' => 'Lieu : ',
+                'class' => Lieu::class,
+                'query_builder' => function (LieuRepository $lieuRepository) {
+                    return $lieuRepository->createQueryBuilder('lieu')
+                        ->orderBy('lieu.nom', 'ASC');
+                },
+                'choice_label' => 'nom'
             ])
-            ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
-            ->add('publier', SubmitType::class, ['label' => 'Publier'])
-            ->add('annuler', SubmitType::class, ['label' => 'Annuler'])
-        ;
+            ->add('rue', EntityType::class, [
+                'label' => 'Rue : ',
+                'class' => Lieu::class,
+                'choice_label' => 'rue',
+                'query_builder' => function (LieuRepository $lieuRepository) {
+                    return $lieuRepository->createQueryBuilder('lieu')
+                        ->orderBy('lieu.rue', 'ASC');
+                },
+                'mapped' => false,
+
+            ])
+            ->add('codePostal', NumberType::class, [
+                'label' => 'Code postal : ',
+                'mapped' => false,
+            ])
+            ->add('latitude', NumberType::class, [
+                'label' => 'Latitude : ',
+                'mapped' => false,
+            ])
+            ->add('longitude', NumberType::class, [
+                'label' => 'Longitude : ',
+                'mapped' => false,
+
+            ])
+            ->add('enregistrer', SubmitType::class, [
+                'label' => 'Enregistrer',
+                'attr' => ['style' => 'display: inline-flex; justify-content: center']
+            ])
+            ->add('publier', SubmitType::class, [
+                'label' => 'Publier',
+            ])
+            ->add('annuler', SubmitType::class, [
+                'label' => 'Annuler',
+                'attr' => ['style' => 'display: inline-flex; justify-content: center']
+
+            ])
+            ;
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -4,11 +4,12 @@ namespace App\Form;
 
 use App\Entity\Lieu;
 use App\Entity\Ville;
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class LieuType extends AbstractType
 {
@@ -24,9 +25,21 @@ class LieuType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => 'Lieu'
             ])
-            ->add('rue')
-            ->add('latitude')
-            ->add('longitude')
+            ->add('rue', TextType::class)
+            ->add('latitude', NumberType::class, [
+                'html5' => true,
+                'attr' => [
+                    'min' => -90,
+                    'max' => 90,
+                ]
+            ])
+            ->add('longitude', NumberType::class, [
+                'html5' => true,
+                'attr' => [
+                    'min' => -180,
+                    'max' => 180,
+                ]
+            ])
         ;
     }
 

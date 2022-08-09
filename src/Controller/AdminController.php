@@ -30,7 +30,7 @@ class AdminController extends AbstractController
      */
     public function listeVilles(VilleRepository $villeRepository): Response
     {
-        $listeVilles = $villeRepository->findAll();
+        $listeVilles = $villeRepository->findAllByAsc();
 
         return $this->render('admin/listeVilles.html.twig', [
             "listeVilles" => $listeVilles
@@ -107,7 +107,7 @@ class AdminController extends AbstractController
      */
     public function listeCampus(CampusRepository $campusRepository): Response
     {
-        $listeCampus = $campusRepository->findAll();
+        $listeCampus = $campusRepository->findAllByAsc();
 
         return $this->render('admin/listeCampus.html.twig', [
             "listeCampus" => $listeCampus
@@ -184,7 +184,7 @@ class AdminController extends AbstractController
     public function listeUtilisateurs(ParticipantRepository $repo)
     {
 
-        $utilisateurs = $repo->findAll();
+        $utilisateurs = $repo->findAllByAsc();
 
         return $this->render('admin/listeUtilisateurs.html.twig', [
             "utilisateurs" => $utilisateurs
@@ -287,6 +287,21 @@ class AdminController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', 'Utilisateur désactivé avec succès !');
+
+        return $this->redirectToRoute('admin_listeUtilisateurs');
+    }
+
+    /**
+     * @Route("/activerUtilisateur/{id}", name="activerUtilisateur")
+     */
+
+    public function activerUtilisateur(Participant $participant, EntityManagerInterface $entityManager)
+    {
+        $participant->setActif(true);
+        $entityManager->persist($participant);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Utilisateur activé avec succès !');
 
         return $this->redirectToRoute('admin_listeUtilisateurs');
     }

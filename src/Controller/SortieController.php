@@ -62,7 +62,7 @@ class SortieController extends AbstractController
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Sortie enregistée avec succès !');
+                $this->addFlash('success', 'Sortie enregistrée avec succès !');
 
                 return $this->redirectToRoute('sortie_afficherSortie', ['id' => $sortie->getId()]);
             }
@@ -136,7 +136,7 @@ class SortieController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Sortie modifiée avec succès !');
-            return $this->redirectToRoute('main_home', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('sortie_afficherSortie', ['id' => $sortie->getId()]);
         }
 
         return $this->render('sortie/modifierSortie.html.twig', [

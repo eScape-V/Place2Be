@@ -56,4 +56,17 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->add($user, true);
     }
 
+    public function findAllByAsc(){
+        $entityManager = $this->getEntityManager();
+        $dql = "
+            SELECT p
+            FROM App\Entity\Participant p
+            ORDER BY p.pseudo ASC 
+            ";
+        $query = $entityManager->createQuery($dql);
+        $results = $query->getResult();
+
+        return $results;
+    }
+
 }

@@ -63,4 +63,17 @@ class CampusRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findAllByAsc(){
+        $entityManager = $this->getEntityManager();
+        $dql = "
+            SELECT c
+            FROM App\Entity\Campus c
+            ORDER BY c.nom ASC 
+            ";
+        $query = $entityManager->createQuery($dql);
+        $results = $query->getResult();
+
+        return $results;
+    }
 }
