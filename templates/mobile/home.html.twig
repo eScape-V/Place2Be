@@ -1,0 +1,44 @@
+{% extends 'mobile.html.twig' %}
+
+{% block body %}
+        {% if app.user %}
+            {% if app.user.actif == true %}
+            <h2>Mes sorties</h2>
+            <div class="col-md-3">
+                <table class="table table-hover">
+                    <thead class="thead2" style="display: flex; justify-content: center">
+                    <tr class="table-primary">
+                        <th scope="col" class="thNomMobile">Nom sortie</th>
+                        <th scope="col" class="thDateMobile">Date sortie</th>
+                        <th scope="col" class="thLieuMobile">Lieu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for sortie in sorties %}
+                            <tr style="display: flex; justify-content: center">
+                                <td class="thNomMobile">{{ sortie.nom }}</td>
+                                <td class="thDateMobile">{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
+                                <td class="thLieuMobile">{{ sortie.lieu.nom }}</td>
+                            </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <br>
+                <div>
+                   <h3>Votre compte a été désactivé, veuillez contacter l'administrateur</h3>
+                </div>
+                <div>
+                    <h4>admin@place2be.fr</h4>
+                </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | Mes sorties
+{% endblock %}
+

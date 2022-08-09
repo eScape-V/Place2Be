@@ -58,6 +58,8 @@ class SortieController extends AbstractController
 
                 $etat->setLibelle(Etat::CREEE);
                 $sortie->setEtat($etat);
+                $sortie->setCampus($sortie->getOrganisateur()->getCampus());
+                $sortie->setLieu($sortie->getLieu()->getRue());
 
                 $entityManager->persist($sortie);
                 $entityManager->flush();

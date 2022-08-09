@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Form\SearchForm;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use Mobile_Detect;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

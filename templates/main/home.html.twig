@@ -5,8 +5,7 @@
 {% block body %}
     {% if app.user %}
         {% if app.user.actif == true %}
-    {#    <div style="margin-right: 60em">#}
-        <div style="margin-right: 60em" class="form-group">
+        <div class="form-group">
             {% include 'inc/filter.html.twig' with {form: form} only %}
         </div>
         <h2>Liste des sorties</h2>

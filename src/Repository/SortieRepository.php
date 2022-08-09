@@ -118,4 +118,15 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllUserInscrit(Participant $participant){
+        $query = $this
+            ->createQueryBuilder('s')
+            ->select('c', 's')
+            ->join('s.participants', 'c')
+            ->andWhere('s.participants IN (:inscrit)')
+            ->setParameter('inscrit', $participant->getSortie());
+
+        return $query;
+    }
+
 }

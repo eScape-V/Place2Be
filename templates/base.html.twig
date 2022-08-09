@@ -8,9 +8,22 @@
 
     <title>{% block title %}Place2Be{% endblock %}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        {# Flatpicker (calendrier datetimepicker) #}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {% endblock %}
+
+    {% block javascripts %}
+        {# Flatpicker (calendrier datetimepicker) #}
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        {# Flatpicker import de la traduction française #}
+        <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+        {# Flatpicker : notre fichier de configuration #}
+        <script src="{{ asset("js/flatpickermyconfig.js") }}"></script>
+    {% endblock %}
 
     <link rel="icon" href="{{ asset('images/favicon.jpg') }}">
 
