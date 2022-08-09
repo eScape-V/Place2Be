@@ -37,5 +37,20 @@ class SearchData
      */
     public $isOrganisateur;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $isInscrit;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $isNotInscrit;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $passees;
+
 
 }

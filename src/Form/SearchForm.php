@@ -30,11 +30,8 @@ class SearchForm extends AbstractType
                 'attr' => [
                     'style' => 'width: 69em'
                 ]
-//                'multiple' => true,
-//                'expanded' => true,
-//                'empty_data' => Campus::class,
-
             ])
+
             ->add('q', TextType::class, [
                 'label' => false,
                 'required' => false,
@@ -64,6 +61,33 @@ class SearchForm extends AbstractType
             ])
 
             ->add('isOrganisateur', CheckboxType::class, [
+                'value' => 1,
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'style' => 'width: 1em'
+                ],
+            ])
+
+            ->add('isInscrit', CheckboxType::class, [
+                'value' => 1,
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'style' => 'width: 1em'
+                ],
+            ])
+
+            ->add('isNotInscrit', CheckboxType::class, [
+                'value' => 1,
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'style' => 'width: 1em'
+                ],
+            ])
+
+            ->add('passees', CheckboxType::class, [
                 'value' => 1,
                 'label' => false,
                 'required' => false,

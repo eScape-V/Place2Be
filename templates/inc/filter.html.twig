@@ -1,7 +1,7 @@
 
 {{ form_start(form) }}
 <div class="container">
-    <div class="row bg-secondary text-white" style="width: 80em; margin-top: 0.5em; border-radius: 10px">
+    <div class="row bg-secondary text-white" style="width: 70em; margin-top: 0.5em; border-radius: 10px">
 
         <div class="col-md-3">
             <div>
@@ -19,13 +19,37 @@
                 <h7>Et</h7>
             {{ form_row(form.dateMax) }}
         </div>
-        <div class="col-md-4" style="margin-top: 1em">
+        <div class="col-md-4" style="margin-top: 1.5em">
             <div class="row" style="margin-left: 3em; text-align: left">
                 <div class="col-md-1">
                     {{ form_row(form.isOrganisateur) }}
                 </div>
                 <div class="col-md-11">
-                    <h7>Sorties dont je suis organisateur</h7>
+                    <h7>Sorties dont je suis l'organisateur/trice</h7>
+                </div>
+            </div>
+            <div class="row" style="margin-left: 3em; text-align: left; margin-top: -1em">
+                <div class="col-md-1">
+                    {{ form_row(form.isInscrit) }}
+                </div>
+                <div class="col-md-11">
+                    <h7>Sorties auxquelles je suis inscrit/e</h7>
+                </div>
+            </div>
+            <div class="row" style="margin-left: 3em; text-align: left; margin-top: -1em">
+                <div class="col-md-1">
+                    {{ form_row(form.isNotInscrit) }}
+                </div>
+                <div class="col-md-11">
+                    <h7>Sorties auxquelles je ne suis pas inscrit/e</h7>
+                </div>
+            </div>
+            <div class="row" style="margin-left: 3em; text-align: left; margin-top: -1em">
+                <div class="col-md-1">
+                    {{ form_row(form.passees) }}
+                </div>
+                <div class="col-md-11">
+                    <h7>Sorties passées</h7>
                 </div>
             </div>
         </div>
