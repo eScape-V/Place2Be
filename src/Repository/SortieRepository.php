@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Data\SearchData;
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -36,7 +37,9 @@ class SortieRepository extends ServiceEntityRepository
         $query = $this
             ->createQueryBuilder('s')
             ->select('c', 's')
-            ->join('s.campus', 'c');
+            ->join('s.campus', 'c')
+            ->orderBy('s.dateHeureDebut', 'ASC');
+
 
         //Filtrer avec les campus
         if (!empty($searchData->campus)) {
@@ -68,10 +71,30 @@ class SortieRepository extends ServiceEntityRepository
 
         //Filtrer si l'utilisateur est organisateur
         if ($searchData->isOrganisateur == 1){
-
                 $query = $query
                 ->andWhere('s.organisateur = :organisateur')
                 ->setParameter('organisateur', $user->getId());
+        }
+
+        //Filtrer si l'utilisateur est inscrit
+        if ($searchData->isInscrit == 1){
+            $query = $query
+                ->andWhere('s IN (:inscrit)')
+                ->setParameter('inscrit', $user->getSortie());
+        }
+
+        //Filtrer si l'utilisateur n'est pas inscrit
+        if ($searchData->isNotInscrit == 1){
+            $query = $query
+                ->andWhere('s NOT IN (:inscrit)')
+                ->setParameter('inscrit', $user->getSortie());
+        }
+
+        //Filtrer si les sorties sont passées (méthode 'datetime')
+        if ($searchData->passees == 1){
+            $query = $query
+                ->andWhere('s.dateHeureDebut <= :dateNow')
+                ->setParameter('dateNow', new \DateTime());
         }
 
         return $query->getQuery()->getResult();

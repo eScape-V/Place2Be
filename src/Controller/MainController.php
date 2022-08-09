@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\SearchForm;
 use App\Repository\ParticipantRepository;
@@ -19,7 +20,13 @@ class MainController extends AbstractController
      * @Route("/", name="main_home")
      */
     public function list(SortieRepository $repo, Request $request){
+
+//        //Création d'un repo avec les sorties 'Terminées'
+//        $sortiesTerminees = $repo ->findBy(array('etat' => '13'));
+
+        //Récupération de l'utilisateur
         $user = $this->getUser();
+
         $data = new SearchData();
         $form = $this->createForm(SearchForm::class, $data);
 
