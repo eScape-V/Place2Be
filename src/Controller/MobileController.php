@@ -14,10 +14,13 @@ use MobileDetectBundle\DeviceDetector\MobileDetectorInterface;
 class MobileController extends AbstractController
 {
     /**
-     * @Route("/mobile", name="mobile_home")
+     * @Route("/", name="mobile_home")
      */
     public function mesSorties(SortieRepository $repo)
     {
+        if(!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $user = $this->getUser();
 
         $sorties = $repo->findAllUserInscrit($user);
@@ -32,6 +35,9 @@ class MobileController extends AbstractController
      */
     public function mobile_afficherSortie(int $id, SortieRepository $repo): Response
         {
+            if(!$this->getUser()) {
+                return $this->redirectToRoute('app_login');
+            }
             $sortie = $repo->find($id);
 
             if (!$sortie)

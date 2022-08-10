@@ -2413,9 +2413,11 @@ textarea.form-control-lg {
 }
 
 .form-switch {
-  padding-left: 37em;
-  margin: 10px;
+  display: flex;
+  justify-content: center;
 }
+
+
 .form-switch .form-check-input {
   width: 2em;
   margin-left: -2.5em;

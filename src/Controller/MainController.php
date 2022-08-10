@@ -44,7 +44,7 @@ class MainController extends AbstractController
 
             $sorties = $repo->findAllUserInscrit($user);
 
-            return $this-> render('main/home.html.twig', [
+            return $this-> render('mobile/home.html.twig', [
                 "sorties" => $sorties
             ]);
         } else {

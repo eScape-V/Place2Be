@@ -9,8 +9,13 @@
     {% endif %}
 
     {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">déconnexion</a>
+        <div>
+            <div style="display: flex; justify-content: center">
+                Vous êtes connecté en tant que :
+            </div>
+            <div style="display: flex; justify-content: center">
+                {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">déconnexion</a>
+            </div>
         </div>
     {% endif %}
 
@@ -48,9 +53,6 @@
     </div>
 </form>
     <br>
-    <div class="liens">
-        <h5><a href="{{ path('app_register') }}">Créer un compte</a></h5>
-    </div>
     <div class="liens">
         <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
     </div>
