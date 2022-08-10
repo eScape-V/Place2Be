@@ -19,9 +19,12 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class CsvImportCommand extends Command
 {
+    private UserPasswordHasherInterface $hasher;
+
     private EntityManagerInterface $entityManager;
 
     private string $dataDirectory;
@@ -30,12 +33,17 @@ class CsvImportCommand extends Command
 
     private ParticipantRepository $participantRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, string $dataDirectory, ParticipantRepository $participantRepository)
+    public function __construct(
+                                EntityManagerInterface $entityManager,
+                                string $dataDirectory,
+                                ParticipantRepository $participantRepository,
+                                UserPasswordHasherInterface $hasher)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->dataDirectory = $dataDirectory;
         $this->participantRepository = $participantRepository;
+        $this->hasher = $hasher;
     }
 
     protected static $defaultName = 'csv:import';
@@ -113,13 +121,17 @@ class CsvImportCommand extends Command
                         ->setCampus($campus [$row['campus_id']])
                         ->setEmail($row['email'])
                         ->setRoles(["ROLE_USER"])
-                        ->setPassword($row['password'])
+//                        ->setPassword($row['password'])
                         ->setNom($row['nom'])
                         ->setPrenom($row['prenom'])
                         ->setTelephone($row['telephone'])
                         ->setAdministrateur($row['administrateur'])
                         ->setActif($row['actif'])
                         ->setPseudo($row['pseudo']);
+
+                    $sPlainPassword = $row['password'];
+                    $hash = $this->hasher->hashPassword($user, $sPlainPassword);
+                    $user->setPassword($hash);
 
                     $this->entityManager->persist($user);
 
