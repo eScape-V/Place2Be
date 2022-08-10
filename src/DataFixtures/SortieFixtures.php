@@ -119,15 +119,13 @@ class SortieFixtures extends Fixture
             $manager->persist($etat[$i]);
         }
 
-        // Création de 5 campus dont le premier est par défaut
+        // Création de 8 vrais campus existants
+        $campusName = ['Paris-Sud', 'Marseille-Nord', 'Bordeaux III', 'Toulouse II', 'Lyon-Sud', 'Lille II', 'Strasbourg I', 'Bayonne'];
         $campus = [];
-        $campus[0] = new Campus();
-        $campus[0]->setNom('Non attribué');
-
-        for ($i = 1; $i < 5; $i++)
+        for ($i = 0; $i < count($campusName); $i++)
         {
             $campus[$i] = new Campus();
-            $campus[$i]->setNom($faker->company);
+            $campus[$i]->setNom($campusName[$i]);
             $manager->persist($campus[$i]);
         }
 
@@ -148,104 +146,60 @@ class SortieFixtures extends Fixture
             $participant[$i]->setAdministrateur(false);
             $participant[$i]->setImageName("$i.jpg");
             $participant[$i]->setRoles(["ROLE_USER"]);
-//
-//            $finder = new Finder();
-//            $finder->files()->in(__DIR__.'/images/');
-////            $filenames = iterator_to_array($finder);
-//            $participant[$i]->setImageFile($i.".jpg");
-////
-////            dd($filenames);
-////
-///
-////
-//////            dd($fileNameWithExtension);
-//            $file = new File();
-//////
-//
-//            $participant[$i]->setImageFile($i.".jpg");
-//            dd($participant[$i]);
-////            $finder->in(__DIR__.'\images/'.$i.'.jpg');
-////            if ($finder->hasResults()) {
-////                // ...
-////            }
-////
-//            foreach ($finder as $file) {
-//                $absoluteFilePath = $file->getRealPath();
-//                $fileNameWithExtension = $file->getRelativePathname();
-//                $participant[$i]->setImageName($absoluteFilePath);
-//                // ...
-//            }
-
-//            $participant[$i]->setImageName($absoluteFilePath);
-
-
-
-//            $file = new File(__DIR__.'/images/'.$i.'.jpg');
-////            if($file) {
-////                $fileName = $fileUploader->upload($file);
-//                $participant->setImageName($file);
-//            }
-//
-//            $randomImage = $this->faker->randomElement(self::$articleImages);
-//            $imageFilename = $this->uploaderHelper
-//                ->uploadArticleImage(new File(__DIR__.'/images/'.$randomImage));
-//            $participant[$i]->setImageName($imageFilename)
-//            ;
-////            $fileName = new File(__DIR__.'/images/'.$i.'.jpg');
-////            $participant[$i]->setImageFile($fileName);
-
-
-//            $fileUploader= null;
-//            $fileName = $fileUploader->upload(__DIR__.'/images/'.$i.'.jpg');
-//            $participant[$i]->setImageName($fileName);
-
-
-//            $file = $file->get('/images/profil_img/'.$i.'.jpg')->getData();
-//            if($file) {
-//                $fileName = $fileUploader->upload($file);
-//                $participant->setImageName($fileName);
-//            }
-////
-//            $participant[$i]->setImageFile((new File('/images/profil_img/'.$i.'.jpg')));
 
             $manager->persist($participant[$i]);
         }
 
+//        // Création d'un participant "user"
+//
+//        $participant[50] = new Participant();
+//        $participant[50]->setPrenom("user");
+//        $participant[50]->setNom("user");
+//        $participant[50]->setTelephone("06".rand(00000000, 99999999));
+//        $participant[50]->setEmail("user@user.com");
+//        $participant[50]->setPassword(hashPassword("Azerty0!"));
+//        $participant[50]->setActif(true);
+//        $participant[50]->setPseudo("user");
+//        $participant[50]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
+//        $participant[50]->setRoles(["ROLE_USER"]);
+//
+//        $manager->persist($participant[50]);
+//
+//        // Création d'un participant "admin"
+//        $participant[51] = new Participant();
+//        $participant[51]->setPrenom("admin");
+//        $participant[51]->setNom("admin");
+//        $participant[51]->setTelephone("06".rand(00000000, 99999999));
+//        $participant[51]->setEmail("admin@admin.com");
+//        $participant[51]->setPassword("Azerty0!");
+//        $participant[51]->setActif(true);
+//        $participant[51]->setPseudo("admin");
+//        $participant[51]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
+//        $participant[51]->setRoles(["ROLE_ADMIN"]);
+//
+//        $manager->persist($participant[51]);
+
         // Création de 30 sorties
         $sortie = [];
 
-        for ($i = 0; $i < 30; $i++) {
-            $sortie[$i] = new Sortie();
-            $sortie[$i]->setNom($faker->sentence($nbWords = 4, $variableNbWords = true));
-            $sortie[$i]->setdateHeureDebut($faker->dateTimeInInterval($startDate = '+ 10 days', $interval = '+20 day', $timezone = null));
-            $sortie[$i]->setDuree($faker->numberBetween($min = 1, $max = 8));
-            $sortie[$i]->setDateLimiteInscription($faker->dateTimeInInterval($startDate = 'now', $interval = '+10 day', $timezone = null));
-            $sortie[$i]->setNbInscriptionsMax($faker->numberBetween($min = 5, $max = 20));
-            $sortie[$i]->setInfosSortie($faker->sentence);
-
-            $sortie[$i]->setEtat($etat[0]);
-            $sortie[$i]->setLieu($lieu[$faker->numberBetween($min = 0, $max = count($lieu) - 1)]);
-            $sortie[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
-            $sortie[$i]->setOrganisateur($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
-            for ($j = 0; $j < $faker->numberBetween($min = 0, $max = $sortie[$i]->getNbInscriptionsMax()); $j++) {
-                $sortie[$i]->addParticipant($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
-            }
-            $manager->persist($sortie[$i]);
-        }
-//        for($i = 1; $i <=10; $i++) {
-//            $sortie = new Sortie();
-//            $sortie -> setNom("Nom de l'article n° $i")
-//                    -> setDateHeureDebut(new \DateTime())
-//                    -> setDuree(100)
-//                    -> setDateLimiteInscription(new \DateTime())
-//                    -> setNbInscriptionsMax(10)
-//                    -> setEtat()
-//                    -> setOrganisateur("Albert")
-//                    -> setInfosSortie("Infos sorties")
-//                    -> setCampus("Rennes")
-//                    -> setLieu("Bordeaux");
+//        for ($i = 0; $i < 30; $i++) {
+//            $sortie[$i] = new Sortie();
+//            $sortie[$i]->setNom($faker->sentence($nbWords = 4, $variableNbWords = true));
+//            $sortie[$i]->setdateHeureDebut($faker->dateTimeInInterval($startDate = '+ 10 days', $interval = '+20 day', $timezone = null));
+//            $sortie[$i]->setDuree($faker->numberBetween($min = 1, $max = 8));
+//            $sortie[$i]->setDateLimiteInscription($faker->dateTimeInInterval($startDate = 'now', $interval = '+10 day', $timezone = null));
+//            $sortie[$i]->setNbInscriptionsMax($faker->numberBetween($min = 5, $max = 20));
+//            $sortie[$i]->setInfosSortie($faker->sentence);
+//
+//            $sortie[$i]->setEtat($etat[0]);
+//            $sortie[$i]->setLieu($lieu[$faker->numberBetween($min = 0, $max = count($lieu) - 1)]);
+//            $sortie[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
+//            $sortie[$i]->setOrganisateur($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
+//            for ($j = 0; $j < $faker->numberBetween($min = 0, $max = $sortie[$i]->getNbInscriptionsMax()); $j++) {
+//                $sortie[$i]->addParticipant($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
+//            }
+//            $manager->persist($sortie[$i]);
 //        }
-        // $product = new Product();
         $manager->flush();
     }
 
