@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\String\UnicodeString;
 
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class SortieFixtures extends Fixture
 {
@@ -76,6 +78,12 @@ class SortieFixtures extends Fixture
         '50.jpg',
     ];
 
+    private UserPasswordHasherInterface $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -132,14 +140,51 @@ class SortieFixtures extends Fixture
         // Création de 50 participants
         $participant = [];
 
-        for ($i = 0; $i < 50; $i++)
+        //Création d'un participant 'user'
+        $participant[0] = new Participant();
+        $participant[0]->setPrenom("user");
+        $participant[0]->setNom("user");
+        $participant[0]->setTelephone("06".rand(00000000, 99999999));
+        $participant[0]->setEmail("user@user.com");
+//        $participant[0]->setPassword(hashPassword("Azerty0!"));
+        $participant[0]->setActif(true);
+        $participant[0]->setPseudo("user");
+        $participant[0]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
+        $participant[0]->setRoles(["ROLE_USER"]);
+
+        $sPlainPassword = "Azerty0!";
+        $hash = $this->hasher->hashPassword($participant[0], $sPlainPassword);
+        $participant[0]->setPassword($hash);
+
+        $manager->persist($participant[0]);
+
+        // Création d'un participant "admin"
+        $participant[1] = new Participant();
+        $participant[1]->setPrenom("admin");
+        $participant[1]->setNom("admin");
+        $participant[1]->setTelephone("06".rand(00000000, 99999999));
+        $participant[1]->setEmail("admin@admin.com");
+//        $participant[51]->setPassword("Azerty0!");
+        $participant[1]->setActif(true);
+        $participant[1]->setPseudo("admin");
+        $participant[1]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
+        $participant[1]->setRoles(["ROLE_ADMIN"]);
+
+        $hash = $this->hasher->hashPassword($participant[1], $sPlainPassword);
+        $participant[1]->setPassword($hash);
+
+        $manager->persist($participant[1]);
+
+        //Création des 48 autres participants fictifs
+
+        for ($i = 2; $i < 50; $i++)
         {
             $participant[$i] = new Participant();
             $participant[$i]->setPrenom($faker->firstName);
             $participant[$i]->setNom($faker->lastName);
             $participant[$i]->setTelephone("06".rand(00000000, 99999999));
             $participant[$i]->setEmail($faker->email);
-            $participant[$i]->setPassword($faker->password);
+//            $participant[$i]->setPassword($faker->password);
             $participant[$i]->setActif(true);
             $participant[$i]->setPseudo($faker->userName);
             $participant[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
@@ -147,59 +192,33 @@ class SortieFixtures extends Fixture
             $participant[$i]->setImageName("$i.jpg");
             $participant[$i]->setRoles(["ROLE_USER"]);
 
+            $sPlainPassword = "Azerty0!";
+            $hash = $this->hasher->hashPassword($participant[$i], $sPlainPassword);
+            $participant[$i]->setPassword($hash);
+
             $manager->persist($participant[$i]);
         }
-
-//        // Création d'un participant "user"
-//
-//        $participant[50] = new Participant();
-//        $participant[50]->setPrenom("user");
-//        $participant[50]->setNom("user");
-//        $participant[50]->setTelephone("06".rand(00000000, 99999999));
-//        $participant[50]->setEmail("user@user.com");
-//        $participant[50]->setPassword(hashPassword("Azerty0!"));
-//        $participant[50]->setActif(true);
-//        $participant[50]->setPseudo("user");
-//        $participant[50]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
-//        $participant[50]->setRoles(["ROLE_USER"]);
-//
-//        $manager->persist($participant[50]);
-//
-//        // Création d'un participant "admin"
-//        $participant[51] = new Participant();
-//        $participant[51]->setPrenom("admin");
-//        $participant[51]->setNom("admin");
-//        $participant[51]->setTelephone("06".rand(00000000, 99999999));
-//        $participant[51]->setEmail("admin@admin.com");
-//        $participant[51]->setPassword("Azerty0!");
-//        $participant[51]->setActif(true);
-//        $participant[51]->setPseudo("admin");
-//        $participant[51]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
-//        $participant[51]->setRoles(["ROLE_ADMIN"]);
-//
-//        $manager->persist($participant[51]);
 
         // Création de 30 sorties
         $sortie = [];
 
-//        for ($i = 0; $i < 30; $i++) {
-//            $sortie[$i] = new Sortie();
-//            $sortie[$i]->setNom($faker->sentence($nbWords = 4, $variableNbWords = true));
-//            $sortie[$i]->setdateHeureDebut($faker->dateTimeInInterval($startDate = '+ 10 days', $interval = '+20 day', $timezone = null));
-//            $sortie[$i]->setDuree($faker->numberBetween($min = 1, $max = 8));
-//            $sortie[$i]->setDateLimiteInscription($faker->dateTimeInInterval($startDate = 'now', $interval = '+10 day', $timezone = null));
-//            $sortie[$i]->setNbInscriptionsMax($faker->numberBetween($min = 5, $max = 20));
-//            $sortie[$i]->setInfosSortie($faker->sentence);
-//
-//            $sortie[$i]->setEtat($etat[0]);
-//            $sortie[$i]->setLieu($lieu[$faker->numberBetween($min = 0, $max = count($lieu) - 1)]);
-//            $sortie[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
-//            $sortie[$i]->setOrganisateur($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
-//            for ($j = 0; $j < $faker->numberBetween($min = 0, $max = $sortie[$i]->getNbInscriptionsMax()); $j++) {
-//                $sortie[$i]->addParticipant($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
-//            }
-//            $manager->persist($sortie[$i]);
-//        }
+        for ($i = 0; $i < 30; $i++) {
+            $sortie[$i] = new Sortie();
+            $sortie[$i]->setNom($faker->sentence($nbWords = 4, $variableNbWords = true));
+            $sortie[$i]->setdateHeureDebut($faker->dateTimeInInterval($startDate = '+ 10 days', $interval = '+20 day', $timezone = null));
+            $sortie[$i]->setDuree($faker->numberBetween($min = 1, $max = 8));
+            $sortie[$i]->setDateLimiteInscription($faker->dateTimeInInterval($startDate = 'now', $interval = '+10 day', $timezone = null));
+            $sortie[$i]->setNbInscriptionsMax($faker->numberBetween($min = 5, $max = 20));
+            $sortie[$i]->setInfosSortie($faker->sentence);
+            $sortie[$i]->setEtat($etat[0]);
+            $sortie[$i]->setLieu($lieu[$faker->numberBetween($min = 0, $max = count($lieu) - 1)]);
+            $sortie[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
+            $sortie[$i]->setOrganisateur($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
+            for ($j = 0; $j < $faker->numberBetween($min = 0, $max = $sortie[$i]->getNbInscriptionsMax()); $j++) {
+                $sortie[$i]->addParticipant($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
+            }
+            $manager->persist($sortie[$i]);
+        }
         $manager->flush();
     }
 
