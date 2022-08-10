@@ -9,18 +9,18 @@
                     <thead class="thead2" style="display: flex; justify-content: center">
                     <tr class="table-primary">
                         <th scope="col" class="thNomMobile">Nom sortie</th>
-                        <th scope="col" class="thDateMobile">Date sortie</th>
+                        <th scope="col">Date sortie</th>
                         <th scope="col" class="thLieuMobile">Lieu</th>
                     </tr>
                     </thead>
                     <tbody>
 
                     {% for sortie in sorties %}
-                            <tr style="display: flex; justify-content: center">
-                                <td class="thNomMobile">{{ sortie.nom }}</td>
-                                <td class="thDateMobile">{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
-                                <td class="thLieuMobile">{{ sortie.lieu.nom }}</td>
-                            </tr>
+                        <tr>
+                            <td class="thNomMobile"><a href="{{ path('afficherSortie', {'id':sortie.id}) }}">{{ sortie.nom }}</a></td>
+                            <td>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
+                            <td class="thLieuMobile">{{ sortie.lieu.nom }}</td>
+                        </tr>
                     {% endfor %}
 
                     </tbody>

@@ -9,6 +9,7 @@ use App\Form\SearchForm;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Mobile_Detect;
+use MobileDetectBundle\DeviceDetector\MobileDetectorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,13 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="main_home")
      */
-    public function list(SortieRepository $repo, Request $request){
+    public function list(SortieRepository $repo, Request $request, MobileDetectorInterface $mobileDetector){
 
 //        //Création d'un repo avec les sorties 'Terminées'
 //        $sortiesTerminees = $repo ->findBy(array('etat' => '13'));
+
+        /*if ($mobileDetector->isMobile())
+            $this->redirectToRoute('mobile_home');*/
 
         //Récupération de l'utilisateur
         $user = $this->getUser();

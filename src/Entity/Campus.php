@@ -25,12 +25,12 @@ class Campus
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="campus")
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="campus", cascade={"persist", "remove"})
      */
     private $participants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="campus", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="campus", cascade={"persist", "remove"})
      */
     private $sortie;
 

@@ -40,12 +40,12 @@ class Lieu
     private $longitude;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="lieu")
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="lieu", cascade={"persist", "remove"})
      */
     private $sorties;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux")
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $ville;

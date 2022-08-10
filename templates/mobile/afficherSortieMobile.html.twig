@@ -3,7 +3,6 @@
 {% block title %}{{ parent() }} | Détails sortie{% endblock %}
 
 {% block body %}
-    {%  %}
     <h2>Détails de la sortie</h2>
     <br>
     <div>
@@ -36,59 +35,6 @@
             </tbody>
         </table>
         <br>
-        <div class="creerSortie">
-            {% if(sortie.participants.contains(app.user)) and sortie.etat.libelle != "En cours" %}
-                <div>
-                    <h5>Vous êtes déjà inscrit à cette sortie</h5>
-                </div>
-                <div>
-                    <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}" class="btn btn-primary">Se désister</a>
-                </div>
-                <br>
-            {% else %}
-                {% if(sortie.etat.libelle == "Ouverte") %}
-                    <div>
-                        <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}" class="btn btn-primary">S'inscrire à la sortie</a>
-                    </div>
-                    <br>
-                {% endif %}
-                {% if(sortie.etat.libelle == "Clôturée") %}
-                    {% if(sortie.participants.count == sortie.nbInscriptionsMax) or (sortie.dateLimiteInscription > date()) %}
-                        <h5>La sortie est clôturée pour l'instant. Nombre maximal de participants atteint, ou date limite d'inscription dépassée.</h5>
-                    {% endif %}
-                {% endif %}
-                {% if(sortie.etat.libelle == "En cours") %}
-                    <div>
-                        <h5>La sortie est en cours</h5>
-                    </div>
-                {% endif %}
-                {% if(sortie.etat.libelle == "Annulée") %}
-                    <div>
-                        <h5>La sortie a été annulée</h5>
-                        <h6>Motif : {{ sortie.motif }}</h6>
-                    </div>
-                    <br>
-                {% endif %}
-                {% if(sortie.etat.libelle == "Terminée") %}
-                    <div>
-                        <h5>La sortie est déjà terminée</h5>
-                    </div>
-                {% endif %}
-            {% endif %}
-            {% if(app.user == sortie.organisateur) and (sortie.etat.libelle == "Créée") %}
-                <div>
-                    <a href="{{ path('sortie_publierSortie', {'id': sortie.id}) }}" class="btn btn-primary">Publier la sortie</a>
-                </div>
-                <br>
-            {% endif %}
-            {% if(app.user == sortie.organisateur) or (app.user.administrateur) %}
-                <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}" class="btn btn-primary">Modifier la sortie</a>
-                {% if (sortie.etat.libelle != "Annulée") %}
-                    <a href="{{ path('sortie_annulerSortie', {'id': sortie.id}) }}" class="btn btn-primary">Annuler la sortie</a>
-                {% endif %}
-                <a href="{{ path('sortie_supprimerSortie', {'id': sortie.id}) }}" class="btn btn-primary">Supprimer la sortie</a>
-            {% endif %}
-        </div>
     </div>
     <br>
     <br>

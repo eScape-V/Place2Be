@@ -4825,8 +4825,18 @@ textarea.form-control-lg {
 
 .alert-danger {
   --bs-alert-color: white;
-  --bs-alert-bg: #ff7851;
-  --bs-alert-border-color: #ffd7cb;
+  --bs-alert-bg: #F3969A;
+  --bs-alert-border-color: #F3969A;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  margin-left: 250px;
+  margin-right: 250px;
 }
 .alert-danger .alert-link {
   color: #cccccc;
@@ -11159,7 +11169,7 @@ table thead, table tbody tr {
 }
 
 .thNomMobile {
-  width: 20em;
+  width: 11em;
 }
 
 .thDateMobile {

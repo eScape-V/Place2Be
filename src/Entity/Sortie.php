@@ -55,7 +55,7 @@ class Sortie
     private $participants;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="organisateur")
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="organisateur", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
@@ -73,7 +73,7 @@ class Sortie
     private $etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $lieu;

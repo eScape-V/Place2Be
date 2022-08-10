@@ -18,7 +18,9 @@ class MobileController extends AbstractController
      */
     public function mesSorties(SortieRepository $repo, MobileDetectorInterface $mobileDetector)
     {
-        $sorties = $repo->findAllUserInscrit($this->getUser());
+        $user = $this->getUser();
+
+        $sorties = $repo->findAllUserInscrit($user);
 
         return $this-> render('mobile/home.html.twig', [
             "sorties" => $sorties
