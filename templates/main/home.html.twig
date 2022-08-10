@@ -24,12 +24,12 @@
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody style="margin-right: -17px">
 
                 {% for sortie in sorties %}
                     {% if(sortie.dateLimiteInscription > date('-30days')) %}
                         <tr>
-                            <td class="thnomsortie">{{ sortie.nom }}</td>
+                            <td class="thnomsortie"><a href="{{ path('sortie_afficherSortie', {'id':sortie.id}) }}">{{ sortie.nom }}</a></td>
                             <td>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
                             <td class="thcloture">{{ sortie.dateLimiteInscription | date('d/m/Y')}}</td>
                             <td class="thplaces">{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
@@ -44,18 +44,24 @@
                                     <img class="vignette"  src="{{ asset('uploads/pictures/'~sortie.organisateur.imageName) }}" alt="" >
                                 {% endif %}
                             </td>
-                            <td><a href="{{ path('sortie_afficherSortie', {'id': sortie.id}) }}">Afficher</a>
+                            <td>
                                 {% if(sortie.participants.contains(app.user)) %}
-                                    - <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}">Se désister</a>
+                                    <div>
+                                        <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}">Se désister</a>
+                                    </div>
                                 {% else %}
                                     {% if(sortie.etat.libelle == "Ouverte" and sortie.dateLimiteInscription > date()) %}
-                                        - <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}">S'inscrire</a>
+                                        <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}">S'inscrire</a>
                                     {% endif %}
                                 {% endif %}
                                 {% if(sortie.organisateur == app.user) %}
-                                    - <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}">Modifier</a>
+                                    <div>
+                                        <a href="{{ path('sortie_modifierSortie', {'id': sortie.id}) }}">Modifier</a>
+                                    </div>
                                     {% if sortie.etat.libelle == "Créée" %}
-                                        - <a href="{{ path('sortie_publierSortie', {'id': sortie.id}) }}">Publier</a>
+                                        <div>
+                                            <a href="{{ path('sortie_publierSortie', {'id': sortie.id}) }}">Publier</a>
+                                        </div>
                                     {% endif %}
                                 {% endif %}
                             </td>

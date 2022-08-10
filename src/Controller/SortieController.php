@@ -59,7 +59,7 @@ class SortieController extends AbstractController
                 $etat->setLibelle(Etat::CREEE);
                 $sortie->setEtat($etat);
                 $sortie->setCampus($sortie->getOrganisateur()->getCampus());
-                $sortie->setLieu($sortie->getLieu()->getRue());
+                $sortie->setLieu($sortie->getLieu());
 
                 $entityManager->persist($sortie);
                 $entityManager->flush();
@@ -162,16 +162,19 @@ class SortieController extends AbstractController
     /**
      * @Route("/publier/{id}", name="publierSortie")
      */
-    public function publierSortie(Sortie $sortie, EntityManagerInterface $entityManager)
+    public function publierSortie($id, EntityManagerInterface $entityManager): Response
     {
+        $sortie = $entityManager->getRepository(Sortie::class)->find($id);
+
         $etat = $sortie->getEtat();
         $etat->setLibelle(Etat::OUVERTE);
         $sortie->setEtat($etat);
+        $entityManager->persist($sortie);
         $entityManager->flush();
 
         $this->addFlash('success', 'Sortie publiée avec succès !');
 
-        return $this->redirectToRoute('main_home');
+        return $this->redirectToRoute('main_home', ['id' => $id]);
     }
 
     /**
