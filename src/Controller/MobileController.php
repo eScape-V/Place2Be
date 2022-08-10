@@ -16,7 +16,7 @@ class MobileController extends AbstractController
     /**
      * @Route("/mobile", name="mobile_home")
      */
-    public function mesSorties(SortieRepository $repo, MobileDetectorInterface $mobileDetector)
+    public function mesSorties(SortieRepository $repo)
     {
         $user = $this->getUser();
 
