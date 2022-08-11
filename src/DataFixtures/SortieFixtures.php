@@ -205,12 +205,32 @@ class SortieFixtures extends Fixture
         for ($i = 0; $i < 30; $i++) {
             $sortie[$i] = new Sortie();
             $sortie[$i]->setNom($faker->sentence($nbWords = 4, $variableNbWords = true));
-            $sortie[$i]->setdateHeureDebut($faker->dateTimeInInterval($startDate = '+ 10 days', $interval = '+20 day', $timezone = null));
-            $sortie[$i]->setDuree($faker->numberBetween($min = 1, $max = 8));
-            $sortie[$i]->setDateLimiteInscription($faker->dateTimeInInterval($startDate = 'now', $interval = '+10 day', $timezone = null));
+
+            //Création d'une variable date/heure de début entre -10 jours (from now) à +20 jours (from now)
+            $dateHeureDebut = $faker->dateTimeInInterval($startDate = '-10 day', $interval = '+30 day', $timezone = null);
+            $sortie[$i]->setdateHeureDebut($dateHeureDebut);
+
+            $sortie[$i]->setDuree($faker->numberBetween($min = 30, $max = 240));
+
+            //Création d'une variable date limite d'inscription aléatoire entre 0 et 10 jours avant début de la date/heure de début
+            $dateLimiteInscription = $faker->dateTimeInInterval($startDate = $dateHeureDebut, $interval = '-10 day', $timezone = null);
+            $sortie[$i]->setDateLimiteInscription($dateLimiteInscription);
+
             $sortie[$i]->setNbInscriptionsMax($faker->numberBetween($min = 5, $max = 20));
             $sortie[$i]->setInfosSortie($faker->sentence);
-            $sortie[$i]->setEtat($etat[0]);
+
+            //Création de l'état en fonction de la date limite d'inscription, date/heure de début et date du jour
+            $now = new \DateTime();
+            $dateOuvertureInscription = $faker->dateTimeInInterval($startDate = $dateLimiteInscription, $interval = '-5 day', $timezone = null);
+            if ($dateHeureDebut <= $now){
+                $sortie[$i]->setEtat($etat[4]);
+            } elseif ($dateLimiteInscription <= $now){
+                $sortie[$i]->setEtat($etat[2]);
+            } elseif ($dateOuvertureInscription < $now){
+                $sortie[$i]->setEtat($etat[1]);
+            } else
+                $sortie[$i]->setEtat($etat[0]);
+
             $sortie[$i]->setLieu($lieu[$faker->numberBetween($min = 0, $max = count($lieu) - 1)]);
             $sortie[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
             $sortie[$i]->setOrganisateur($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
