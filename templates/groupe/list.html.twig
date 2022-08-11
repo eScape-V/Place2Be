@@ -1,0 +1,95 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% block title %}Liste des groupes{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        {# Flatpicker (calendrier datetimepicker) #}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {% endblock %}
+
+    {% block javascripts %}
+        {# Flatpicker (calendrier datetimepicker) #}
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        {# Flatpicker import de la traduction française #}
+        <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+        {# Flatpicker : notre fichier de configuration #}
+        <script src="{{ asset("js/flatpickermyconfig.js") }}"></script>
+        <script src="{{ asset('js/dropdown.js') }}"></script>
+        <script src="{{ asset('js/plus.js') }}"></script>
+    {% endblock %}
+
+    <link rel="icon" href="{{ asset('images/favicon.jpg') }}">
+
+    {% block extrastyles %}{% endblock %}
+    <style>
+        .grid {
+            display:grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-gap: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <a href="{{ path('main_home') }}"></a>
+    {% include("inc/nav.html.twig") %}
+</header>
+
+<div class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <main>
+        {% block body %}
+    <div class="container">
+        <div class="grid">
+            {% for groupe in groupes %}
+                <div class="card">
+                    <h4>{{ groupe.nom }}</h4>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Pseudo</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Profil</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for participant in groupe.participants %}
+                            <tr>
+                                <td>{{ participant.pseudo }}</td>
+                                <td>{{ participant.prenom }}{{ participant.nom }} </td>
+                                <td><a href="{{ path('afficherProfil', {'id': participant.id}) }}">Afficher</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+        {% endblock %}
+    </main>
+</div>
+<footer>
+    {% include("inc/nav.html.twig") %}
+    <div style="text-align: center">&copy; {{ "now"|date('Y') }} Place2Be</div>
+</footer>
+</body>
+</html>
+

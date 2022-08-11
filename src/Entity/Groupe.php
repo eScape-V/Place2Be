@@ -23,11 +23,18 @@ class Groupe
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
+    
 
     /**
-     * @ORM\ManyToMany(targetEntity=Participant::class, inversedBy="groupes")
+     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="groupe")
      */
     private $participants;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="createurGroupe")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $createur;
 
     public function __construct()
     {
@@ -63,6 +70,7 @@ class Groupe
     {
         if (!$this->participants->contains($participant)) {
             $this->participants[] = $participant;
+            $participant->addGroupe($this);
         }
 
         return $this;
@@ -70,7 +78,22 @@ class Groupe
 
     public function removeParticipant(Participant $participant): self
     {
-        $this->participants->removeElement($participant);
+        if ($this->participants->removeElement($participant)){
+            $participant->removeGroupe($this);
+        }
+
+
+        return $this;
+    }
+
+    public function getCreateur(): ?Participant
+    {
+        return $this->createur;
+    }
+
+    public function setCreateur(?Participant $createur): self
+    {
+        $this->createur = $createur;
 
         return $this;
     }

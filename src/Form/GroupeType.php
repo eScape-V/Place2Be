@@ -17,13 +17,17 @@ class GroupeType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom du groupe'
+                'label' => 'Nom du groupe',
+                'required' => true,
             ])
             ->add('participants', EntityType::class, [
                 'class' => Participant::class,
+                'label' => false,
                 'choice_label' => 'pseudo',
-                'mapped' => false
-        ])
+                'multiple' => true,
+                'expanded' => true,
+                'mapped' => true
+            ])
         ;
     }
 
@@ -31,6 +35,13 @@ class GroupeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Groupe::class,
+//            'method' => 'GET',
+            'csrf_protection' => false
         ]);
+    }
+
+    public function getBlockPrefix()
+    {
+        return '';
     }
 }

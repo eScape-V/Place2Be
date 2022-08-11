@@ -46,17 +46,44 @@ class GroupeController extends AbstractController
         $groupeForm->handleRequest($request);
 
         if ($groupeForm->isSubmitted() && $groupeForm->isValid()) {
-            $entityManager->persist($groupe);
+
+            $groupeReal = $groupe->getParticipants();
+            $groupeFalsch = new Groupe();
+
+            $groupeFalsch ->setNom($groupe->getNom());
+            $groupeFalsch ->setCreateur($this->getUser());
+            for ($i = 0; $i < count($groupeReal); $i++) {
+                $groupeFalsch->addParticipant($groupeReal[$i]);
+            }
+
+            $entityManager->persist($groupeFalsch);
             $entityManager->flush();
 
             $this->addFlash('success', 'Groupe privé crée avec succès !');
 
-            return $this->redirectToRoute('main_home', ['id'=>$groupe->getId()]);
+            return $this->redirectToRoute('main_home', [
+                'id'=>$groupe->getId()
+            ]);
 
         }
         return $this->render('groupe/creerGroupePrive.twig', [
             'groupeForm' => $groupeForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/groupes", name="mesGroupes")
+     */
+    public function list(GroupeRepository $repo, Request $request){
+
+            $user = $this->getUser();
+
+            $groupes = $repo->findAllGroupUser($user);
+//            $groupes = $repo->findAll();
+
+            return $this-> render('groupe/list.html.twig', [
+                "groupes" => $groupes
+            ]);
     }
 
 }

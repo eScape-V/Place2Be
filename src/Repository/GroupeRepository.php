@@ -40,19 +40,21 @@ class GroupeRepository extends ServiceEntityRepository
         }
     }
 
-//    public function findAllGroupUser(Participant $user){
-//        $query = $this
-//            ->createQueryBuilder('s')
-//            ->select('c', 's')
-//            ->join('s.campus', 'c')
-//            ->orderBy('s.dateHeureDebut', 'ASC');
-//        if ($user->getSortie()){
-//            $query = $query
-//                ->andWhere('s IN (:campus)')
-//                ->setParameter('campus', $user->getCampus()->getSortie());
-//        }
-//        return $query->getQuery()->getResult();
-//    }
+
+
+    public function findAllGroupUser(Participant $user){
+        $query = $this
+            ->createQueryBuilder('groupe')
+            ->select('c', 'groupe')
+            ->join('groupe.createur', 'c')
+            ->orderBy('groupe.nom', 'ASC');
+        if ($user->getGroupe()){
+            $query = $query
+                ->andWhere('groupe IN (:campus)')
+                ->setParameter('campus', $user->getCreateurGroupe());
+        }
+        return $query->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Groupe[] Returns an array of Groupe objects

@@ -109,15 +109,21 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $imageName;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Groupe::class, mappedBy="participants")
+     * @ORM\ManyToMany(targetEntity=Groupe::class, inversedBy="participants")
      */
-    private $groupes;
+    private $groupe;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Groupe::class, mappedBy="createur")
+     */
+    private $createurGroupe;
 
     public function __construct()
     {
         $this->sortie = new ArrayCollection();
         $this->organisateur = new ArrayCollection();
-        $this->groupes = new ArrayCollection();
+        $this->groupe = new ArrayCollection();
+        $this->createurGroupe = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -385,25 +391,51 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Groupe>
      */
-    public function getGroupes(): Collection
+    public function getGroupe(): Collection
     {
-        return $this->groupes;
+        return $this->groupe;
     }
 
     public function addGroupe(Groupe $groupe): self
     {
-        if (!$this->groupes->contains($groupe)) {
-            $this->groupes[] = $groupe;
-            $groupe->addParticipant($this);
+        if (!$this->groupe->contains($groupe)) {
+            $this->groupe[] = $groupe;
         }
-
         return $this;
     }
 
     public function removeGroupe(Groupe $groupe): self
     {
-        if ($this->groupes->removeElement($groupe)) {
-            $groupe->removeParticipant($this);
+        $this->groupe->removeElement($groupe);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Groupe>
+     */
+    public function getCreateurGroupe(): Collection
+    {
+        return $this->createurGroupe;
+    }
+
+    public function addCreateurGroupe(Groupe $createurGroupe): self
+    {
+        if (!$this->createurGroupe->contains($createurGroupe)) {
+            $this->createurGroupe[] = $createurGroupe;
+            $createurGroupe->setCreateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreateurGroupe(Groupe $createurGroupe): self
+    {
+        if ($this->createurGroupe->removeElement($createurGroupe)) {
+            // set the owning side to null (unless already changed)
+            if ($createurGroupe->getCreateur() === $this) {
+                $createurGroupe->setCreateur(null);
+            }
         }
 
         return $this;
