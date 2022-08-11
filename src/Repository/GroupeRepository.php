@@ -78,4 +78,17 @@ class GroupeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function affichageGroupe(){
+        $entityManager = $this->getEntityManager();
+        $dql = "SELECT participants.*
+        FROM App\Entity\Groupe g
+        INNER JOIN participants
+        ON participants_groupe.participants_id = participants.participants_id
+        WHERE participants.groupe_id = ?";
+
+        $query = $entityManager->createQuery($dql);
+
+        return $query;
+    }
 }

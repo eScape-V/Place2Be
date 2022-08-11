@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Groupe;
+use App\Entity\Participant;
+use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
+use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,61 +17,46 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupeController extends AbstractController
 {
     /**
-     * @Route("/groupe", name="app_groupe")
+     * @Route("/modifierGroupePrive", name="modifierGroupePrive")
      */
-    public function listGroupes(GroupeRepository $groupeRepository, Request $request):
+    public function modifierGroupePrive(GroupeRepository $repo): Response
     {
-        $groupes = $groupeRepository->findAll();
+        $groupe = $repo->findAll();
 
-        return $this->render('groupe/index.html.twig', [
-            'groupes' => $groupes,
-            'form' => $form -> createView(),
+        if (!$groupe)
+            throw $this->createNotFoundException('Pas de groupe avec cet identifiant');
+
+        return $this->render('groupe/modifierGroupePrive.twig', [
+            "groupe" => $groupe
         ]);
     }
 
-
-    public function createGroupe(Request $request,
-                             EntityManagerInterface $entityManager): Response
+    /**
+     * @Route("/creerGroupePrive", name="creerGroupePrive")
+     */
+    public function creerGroupePrive(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $participant = new Participant();
-        //Affectation du ROLE USER par défaut, et Administrateur et Actif sur false par défaut lors de l'inscription
-        $participant->setAdministrateur(false);
-        $participant->setActif(true);
-        $participant->setRoles(["ROLE_USER"]);
-
-        $form = $this->createForm(RegistrationFormType::class, $participant);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $participant->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $participant,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            //Upload de l'image
-            $file = $form->get('imageFile')->getData();
-            if($file) {
-                $fileName = $fileUploader->upload($file);
-                $participant->setImageName($fileName);
-            }
-
-            $this->addFlash('success', 'Inscription réussie !');
-
-            $entityManager->persist($participant);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $userAuthenticator->authenticateUser(
-                $participant,
-                $authenticator,
-                $request
-            );
+        if (!$this->getUser()) {
+            $this->addFlash('error', 'Veuillez vous connecter pour créer un groupe');
+            return $this->redirectToRoute('app_login');
         }
+        $groupe = new Groupe();
+        $groupeForm = $this->createForm(GroupeType::class, $groupe);
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+        $groupeForm->handleRequest($request);
+
+        if ($groupeForm->isSubmitted() && $groupeForm->isValid()) {
+            $entityManager->persist($groupe);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Groupe privé crée avec succès !');
+
+            return $this->redirectToRoute('main_home', ['id'=>$groupe->getId()]);
+
+        }
+        return $this->render('groupe/creerGroupePrive.twig', [
+            'groupeForm' => $groupeForm->createView()
         ]);
     }
+
 }

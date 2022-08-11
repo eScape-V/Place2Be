@@ -6,6 +6,8 @@
 
 {% block body %}
     <h2>Mon profil</h2>
+        <h6><a href="{{ path('creerGroupePrive') }}">Créer un groupe privé</a></h6>
+        <h6><a href="{{ path('modifierGroupePrive') }}">Gestion du groupe privé</a></h6>
     <div class="d-flex justify-content-center">
         <div>
             {{ form_start(form) }}
