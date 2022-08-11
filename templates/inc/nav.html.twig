@@ -5,6 +5,25 @@
                                                                     alt="Place2Be"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu show" data-bs-popper="static">
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a class="dropdown-item" href="{{ path('admin_listeVilles') }}">Villes</a>
+                            <a class="dropdown-item" href="{{ path('admin_listeCampus') }}">Campus</a>
+                            <a class="dropdown-item" href="{{ path('admin_listeUtilisateurs') }}">Utilisateurs</a>
+                        {% endif %}
+                        {% if not(app.user) %}
+                            <a class="dropdown-item" href="{{ path('app_register') }}">Créer un compte</a>
+                            <a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{{ path('modifierProfil', {'id': app.user.id}) }}">Mon profil ({{ app.user.pseudo }})</a>
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
@@ -13,6 +32,8 @@
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
+
+
                 {% if is_granted("ROLE_ADMIN") %}
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ path('admin_listeVilles') }}">Villes

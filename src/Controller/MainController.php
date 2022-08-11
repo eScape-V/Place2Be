@@ -30,15 +30,17 @@ class MainController extends AbstractController
      */
     public function list(SortieRepository $repo, Request $request){
 
-//        //Création d'un repo avec les sorties 'Terminées'
+//      //Création d'un repo avec les sorties 'Terminées'
 //        $sortiesTerminees = $repo ->findBy(array('etat' => '13'));
 
         /*if ($mobileDetector->isMobile())
             $this->redirectToRoute('mobile_home');*/
 
+        if(!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
-
-        if ($this->mobileDetector -> isMobile())
+        if ($this->mobileDetector -> isMobile() and !$this->mobileDetector->isTablet())
         {
             $user = $this->getUser();
 

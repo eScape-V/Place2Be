@@ -14,23 +14,6 @@ use MobileDetectBundle\DeviceDetector\MobileDetectorInterface;
 class MobileController extends AbstractController
 {
     /**
-     * @Route("/", name="mobile_home")
-     */
-    public function mesSorties(SortieRepository $repo)
-    {
-        if(!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
-        $user = $this->getUser();
-
-        $sorties = $repo->findAllUserInscrit($user);
-
-        return $this-> render('mobile/home.html.twig', [
-            "sorties" => $sorties
-        ]);
-    }
-
-    /**
      * @Route("/afficherSortie/{id}", name="afficherSortie")
      */
     public function mobile_afficherSortie(int $id, SortieRepository $repo): Response

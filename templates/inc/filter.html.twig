@@ -1,9 +1,9 @@
 
 {{ form_start(form) }}
-<div class="container">
-    <div class="row bg-secondary text-white col-lg-1" style="width: 70em; margin-top: 0.5em; border-radius: 10px">
+<div class="container d-none d-sm-block">
+    <div class="row bg-secondary text-white" style="margin-top: 0.5em; border-radius: 10px">
 
-        <div class="col-md-3">
+        <div class="col-sm-3">
             <div style="margin-top: 0.5em">
                 <h7>Campus:</h7>
                 {{ form_row(form.campus) }}
@@ -13,7 +13,7 @@
                 {{ form_row(form.q) }}
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-sm-3">
             <div style="margin-top: 0.5em">
                 <h7>Entre:</h7>
                 {{ form_row(form.dateMin) }}
@@ -23,36 +23,36 @@
                 {{ form_row(form.dateMax) }}
             </div>
         </div>
-        <div class="col-md-4" style="margin-top: 1.5em">
+        <div class="col-sm-4" style="margin-top: 1.5em">
             <div class="row" style="margin-left: 3em; text-align: left">
-                <div class="col-md-1">
+                <div class="col-sm-1">
                     {{ form_row(form.isOrganisateur) }}
                 </div>
-                <div class="col-md-11">
+                <div class="col-sm-11">
                     <h7>Sorties dont je suis l'organisateur/trice</h7>
                 </div>
             </div>
             <div class="row" style="margin-left: 3em; text-align: left; margin-top: -1em">
-                <div class="col-md-1">
+                <div class="col-sm-1">
                     {{ form_row(form.isInscrit) }}
                 </div>
-                <div class="col-md-11">
+                <div class="col-sm-11">
                     <h7>Sorties auxquelles je suis inscrit/e</h7>
                 </div>
             </div>
             <div class="row" style="margin-left: 3em; text-align: left; margin-top: -1em">
-                <div class="col-md-1">
+                <div class="col-sm-1">
                     {{ form_row(form.isNotInscrit) }}
                 </div>
-                <div class="col-md-11">
+                <div class="col-sm-11">
                     <h7>Sorties auxquelles je ne suis pas inscrit/e</h7>
                 </div>
             </div>
             <div class="row" style="margin-left: 3em; text-align: left; margin-top: -1em">
-                <div class="col-md-1">
+                <div class="col-sm-1">
                     {{ form_row(form.passees) }}
                 </div>
-                <div class="col-md-11">
+                <div class="col-sm-11">
                     <h7>Sorties passées</h7>
                 </div>
             </div>

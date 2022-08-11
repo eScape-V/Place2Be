@@ -9,28 +9,28 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-                    <td>Nom de la sortie: {{ sortie.nom }}</td>
-                    <td>Campus: {{ sortie.campus.getNom() }}</td>
+                    <td>Nom de la sortie: <div>{{ sortie.nom }}</div></td>
+                    <td>Campus: <div>{{ sortie.campus.getNom() }}</div></td>
                 </tr>
                 <tr>
-                    <td>Date et heure de la sortie: {{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</td>
-                    <td>Lieu: {{ sortie.lieu.getNom() }}</td>
+                    <td>Date et heure de la sortie: <div>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</div></td>
+                    <td>Lieu: <div>{{ sortie.lieu.getNom() }}</div></td>
                 </tr>
                 <tr>
-                    <td>Date limite d'inscription: {{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
-                    <td>Rue: {{ sortie.lieu.rue }}</td>
+                    <td>Date limite d'inscription: <div>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</div></td>
+                    <td>Rue: <div>{{ sortie.lieu.rue }}</div></td>
                 </tr>
                 <tr>
-                    <td>Nombre de places: {{ sortie.nbInscriptionsMax }} personnes</td>
-                    <td>Code postal: {{ sortie.lieu.ville.codePostal }}</td>
+                    <td>Nombre de places: <div>{{ sortie.nbInscriptionsMax }} personnes</div></td>
+                    <td>Code postal: <div>{{ sortie.lieu.ville.codePostal }}</div></td>
                 </tr>
                 <tr>
-                    <td>Durée: {{ sortie.duree }} minutes</td>
-                    <td>Latitude: {{ sortie.lieu.latitude }}</td>
+                    <td>Durée: <div>{{ sortie.duree }} minutes</div></td>
+                    <td>Latitude: <div>{{ sortie.lieu.latitude }}</div></td>
                 </tr>
                 <tr>
-                    <td>Description et infos: {{ sortie.infosSortie }}</td>
-                    <td>Longitude: {{ sortie.lieu.longitude }}</td>
+                    <td>Description et infos: <div>{{ sortie.infosSortie }}</div></td>
+                    <td>Longitude: <div>{{ sortie.lieu.longitude }}</div></td>
                 </tr>
             </tbody>
         </table>
