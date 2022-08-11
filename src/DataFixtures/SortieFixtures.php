@@ -189,6 +189,7 @@ class SortieFixtures extends Fixture
             $participant[$i]->setPseudo($faker->userName);
             $participant[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
             $participant[$i]->setAdministrateur(false);
+//            $participant[$i]->setImageName("https://picsum.photos/200/300");
             $participant[$i]->setImageName("$i.jpg");
             $participant[$i]->setRoles(["ROLE_USER"]);
 

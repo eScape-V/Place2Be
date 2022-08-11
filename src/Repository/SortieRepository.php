@@ -31,14 +31,6 @@ class SortieRepository extends ServiceEntityRepository
      */
     public function findSearch(SearchData $searchData, Participant $user): array
     {
-
-//        //On récupère une requête avec la totalité
-//        $query = $this
-//            ->createQueryBuilder('s')
-//            ->select('c', 's')
-//            ->join('s.campus', 'c')
-//            ->orderBy('s.dateHeureDebut', 'ASC');
-
         //On récupère une requête avec la totalité
         $query = $this
             ->createQueryBuilder('s')
@@ -136,7 +128,5 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('campus', $user->getCampus()->getSortie());
         }
         return $query->getQuery()->getResult();
-
     }
-
 }
