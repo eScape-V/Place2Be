@@ -32,6 +32,13 @@ class SortieRepository extends ServiceEntityRepository
     public function findSearch(SearchData $searchData, Participant $user): array
     {
 
+//        //On récupère une requête avec la totalité
+//        $query = $this
+//            ->createQueryBuilder('s')
+//            ->select('c', 's')
+//            ->join('s.campus', 'c')
+//            ->orderBy('s.dateHeureDebut', 'ASC');
+
         //On récupère une requête avec la totalité
         $query = $this
             ->createQueryBuilder('s')
@@ -117,7 +124,7 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllUserInscrit(Participant $user){
+    public function findByCampusUser(Participant $user){
         $query = $this
             ->createQueryBuilder('s')
             ->select('c', 's')
@@ -125,8 +132,8 @@ class SortieRepository extends ServiceEntityRepository
             ->orderBy('s.dateHeureDebut', 'ASC');
         if ($user->getSortie()){
             $query = $query
-                ->andWhere('s IN (:inscrit)')
-                ->setParameter('inscrit', $user->getSortie());
+                ->andWhere('s IN (:campus)')
+                ->setParameter('campus', $user->getCampus()->getSortie());
         }
         return $query->getQuery()->getResult();
 

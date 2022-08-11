@@ -44,7 +44,7 @@ class MainController extends AbstractController
         {
             $user = $this->getUser();
 
-            $sorties = $repo->findAllUserInscrit($user);
+            $sorties = $repo->findByCampusUser($user);
 
             return $this-> render('mobile/home.html.twig', [
                 "sorties" => $sorties

@@ -207,13 +207,14 @@ class SortieFixtures extends Fixture
             $sortie[$i]->setNom($faker->sentence($nbWords = 4, $variableNbWords = true));
 
             //Création d'une variable date/heure de début entre -10 jours (from now) à +20 jours (from now)
-            $dateHeureDebut = $faker->dateTimeInInterval($startDate = '-10 day', $interval = '+30 day', $timezone = null);
+            $dateHeureDebut = $faker->dateTimeInInterval($startDate = '-5 day', $interval = '+20 day', $timezone = null);
             $sortie[$i]->setdateHeureDebut($dateHeureDebut);
 
-            $sortie[$i]->setDuree($faker->numberBetween($min = 30, $max = 240));
+            $duree = $faker->numberBetween($min = 30, $max = 240);
+            $sortie[$i]->setDuree($duree);
 
             //Création d'une variable date limite d'inscription aléatoire entre 0 et 10 jours avant début de la date/heure de début
-            $dateLimiteInscription = $faker->dateTimeInInterval($startDate = $dateHeureDebut, $interval = '-10 day', $timezone = null);
+            $dateLimiteInscription = $faker->dateTimeInInterval($startDate = $dateHeureDebut, $interval = '-2 day', $timezone = null);
             $sortie[$i]->setDateLimiteInscription($dateLimiteInscription);
 
             $sortie[$i]->setNbInscriptionsMax($faker->numberBetween($min = 5, $max = 20));
@@ -221,10 +222,24 @@ class SortieFixtures extends Fixture
 
             //Création de l'état en fonction de la date limite d'inscription, date/heure de début et date du jour
             $now = new \DateTime();
-            $dateOuvertureInscription = $faker->dateTimeInInterval($startDate = $dateLimiteInscription, $interval = '-5 day', $timezone = null);
+            $dateOuvertureInscription = $faker->dateTimeInInterval($startDate = $dateLimiteInscription, $interval = '-12 day', $timezone = null);
+
+//            $dureeString = trim($duree).'i';
+//            $dateHeureDebutString = trim($dateHeureDebut);
+//
+//            $dureeTime = new \DateInterval($dureeString);
+////            dd($dureeTime); retourne les minutes
+//
+//            $period = new \DatePeriod($dateHeureDebut, $dureeTime, 1 );
+////            dd($period); return ok toutes les infos
+//
+//            $dateFinDeSortie = new \DateTime($dateHeureDebutString.'+'.$dureeString);
+////            dd($dateFinDeSortie);
+
+
             if ($dateHeureDebut <= $now){
                 $sortie[$i]->setEtat($etat[4]);
-            } elseif ($dateLimiteInscription <= $now){
+            }elseif ($dateLimiteInscription <= $now){
                 $sortie[$i]->setEtat($etat[2]);
             } elseif ($dateOuvertureInscription < $now){
                 $sortie[$i]->setEtat($etat[1]);
@@ -234,9 +249,16 @@ class SortieFixtures extends Fixture
             $sortie[$i]->setLieu($lieu[$faker->numberBetween($min = 0, $max = count($lieu) - 1)]);
             $sortie[$i]->setCampus($campus[$faker->numberBetween($min = 0, $max = count($campus) - 1)]);
             $sortie[$i]->setOrganisateur($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
-            for ($j = 0; $j < $faker->numberBetween($min = 0, $max = $sortie[$i]->getNbInscriptionsMax()); $j++) {
-                $sortie[$i]->addParticipant($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
+
+            if ($sortie[$i]->getEtat() == $etat[0]){
+                $sortie[$i]->addParticipant($sortie[$i]->getOrganisateur());
+//                $sortie[$i]->addParticipant($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
+            } else {
+                for ($j = 0; $j < $faker->numberBetween($min = 0, $max = $sortie[$i]->getNbInscriptionsMax()); $j++) {
+                    $sortie[$i]->addParticipant($participant[$faker->numberBetween($min = 0, $max = count($participant) - 1)]);
+                }
             }
+
             $manager->persist($sortie[$i]);
         }
         $manager->flush();
