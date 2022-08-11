@@ -102,12 +102,12 @@ class SortieFixtures extends Fixture
         }
 
         // Création de 30 lieux
-        $lieu = [];
+        $lieux = ['Restaurant', 'Bar', 'Concert', 'Plage', 'Musée', 'Campagne', 'En extérieur', 'Stade', 'Magasins', 'Parc d\'attraction'];
 
-        for ($i = 0; $i < 30; $i++)
+        for ($i = 0; $i < count($lieux); $i++)
         {
             $lieu[$i] = new Lieu();
-            $lieu[$i]->setNom($faker->city);
+            $lieu[$i]->setNom($lieux[$i]);
             $lieu[$i]->setRue($faker->streetName);
             $lieu[$i]->setLatitude($faker->latitude($min = -90, $max = 90));
             $lieu[$i]->setLongitude($faker->longitude($min = -180, $max = 180));

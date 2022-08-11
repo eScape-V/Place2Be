@@ -21,7 +21,7 @@
                         <th scope="col">Inscrits
                             <div>/Places</div></th>
                         <th scope="col">Etat</th>
-                        <th scope="col">Inscrit</th>
+                        <th scope="col" style="width: 10%">Inscrit</th>
                         <th scope="col">Organi- <div>sateur</div></th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -36,11 +36,11 @@
                             <td>{{ sortie.dateLimiteInscription | date('d/m/Y')}}</td>
                             <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
                             <td>{{ sortie.etat.getLibelle() }}</td>
-                            <td>{% if(sortie.participants.contains(app.user)) %}
+                            <td style="width: 10%">{% if(sortie.participants.contains(app.user)) %}
                                     X
                                 {% endif %}
                             </td>
-                            <td><a href="{{ path('afficherProfil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                            <td><a href="{{ path('afficherProfil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo|split('.')[0] }}</a></td>
                             <td>
                                 {% if(sortie.participants.contains(app.user)) %}
                                     <div>

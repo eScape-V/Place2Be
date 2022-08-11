@@ -91,15 +91,15 @@ class SortieType extends AbstractType
             ])
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Enregistrer',
-                'attr' => ['style' => 'display: inline-flex; justify-content: center']
+                'attr' => ['style' => 'margin-right: 30%']
             ])
             ->add('publier', SubmitType::class, [
                 'label' => 'Publier',
+                'attr' => ['style' => 'margin-right: 30%']
             ])
             ->add('annuler', SubmitType::class, [
                 'label' => 'Annuler',
-                'attr' => ['style' => 'display: inline-flex; justify-content: center']
-
+                'attr' => ['style' => 'margin-right: 30%']
             ])
             ;
     }

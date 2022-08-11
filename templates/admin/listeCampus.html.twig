@@ -15,8 +15,10 @@
             {% for campus in listeCampus %}
                     <tr>
                         <td class="thnomsortie">{{ campus.nom }}</td>
-                        <td><a href="{{ path('admin_modifierCampus', {'id': campus.id}) }}">Modifier</a>
-                        <td><a href="{{ path('admin_supprimerCampus', {'id': campus.id}) }}">Supprimer</a>
+                        <td><div>
+                                <a href="{{ path('admin_modifierCampus', {'id': campus.id}) }}">Modifier</a>
+                                - <a href="{{ path('admin_modifierCampus', {'id': campus.id}) }}">Supprimer</a>
+                            </div>
                         </td>
                     </tr>
             {% endfor %}
@@ -33,4 +35,3 @@
 {% block title %}
     {{ parent() }} | Gestion des campus
 {% endblock %}
-

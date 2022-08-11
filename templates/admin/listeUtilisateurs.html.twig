@@ -9,11 +9,10 @@
                 <thead>
                 <tr class="table-primary">
                     <th scope="col">Pseudo</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Téléphone</th>
-                    <th scope="col">Actif</th>
+                    <th scope="col" style="width: 5%">Actif</th>
                     <th scope="col">Campus</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -21,23 +20,21 @@
             <tbody>
                 {% for utilisateur in utilisateurs %}
                 <tr>
-                    <td>{{ utilisateur.pseudo }}</td>
-                    <td>{{ utilisateur.email }}</td>
+                    <td><a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}">{{ utilisateur.pseudo }}</a></td>
                     <td>{{ utilisateur.nom }}</td>
                     <td>{{ utilisateur.prenom }}</td>
                     <td>{{ utilisateur.telephone }}</td>
-                    <td>{% if(utilisateur.actif) %}
+                    <td style="width: 5%">{% if(utilisateur.actif) %}
                             X
                         {% endif %}
                     </td>
                     <td>{{ utilisateur.campus.nom }}</td>
-                    <td><a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}">Afficher</a>
-                        - <a href="{{ path('admin_modifierUtilisateur', {'id': utilisateur.id}) }}">Modifier</a>
-                        - <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a>
+                    <td><a href="{{ path('admin_modifierUtilisateur', {'id': utilisateur.id}) }}">Modifier</a>
+                        <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a>
                         {% if utilisateur.actif %}
-                            - <a href="{{ path('admin_desactiverUtilisateur', {'id': utilisateur.id}) }}">Désactiver</a>
+                           <a href="{{ path('admin_desactiverUtilisateur', {'id': utilisateur.id}) }}">Désactiver</a>
                         {% else %}
-                            - <a href="{{ path('admin_activerUtilisateur', {'id': utilisateur.id}) }}">Activer</a>
+                            <a href="{{ path('admin_activerUtilisateur', {'id': utilisateur.id}) }}">Activer</a>
                         {% endif %}
                     </td>
                     {% endfor %}
