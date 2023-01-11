@@ -1,19 +1,60 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+    <title>{% block title %}Place2Be{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        {# Flatpicker (calendrier datetimepicker) #}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {% endblock %}
+
+    {% block javascripts %}
+        {# Flatpicker (calendrier datetimepicker) #}
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        {# Flatpicker import de la traduction française #}
+        <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+        {# Flatpicker : notre fichier de configuration #}
+        <script src="{{ asset("js/flatpickermyconfig.js") }}"></script>
+        <script src="{{ asset('js/dropdown.js') }}"></script>
+        <script src="{{ asset('js/plus.js') }}"></script>
+    {% endblock %}
+
+    <link rel="icon" href="{{ asset('images/favicon.jpg') }}">
+
+    {% block extrastyles %}{% endblock %}
+</head>
+<body>
+    <header>
+            <a href="{{ path('main_home') }}"></a>
+            {% include("inc/nav.html.twig") %}
+    </header>
+
+    <div class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <main>
+        {% block body %}
+
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    </main>
+    </div>
+    <footer>
+        {% include("inc/nav.html.twig") %}
+        <div style="text-align: center">&copy; {{ "now"|date('Y') }} Place2Be</div>
+    </footer>
+</body>
 </html>

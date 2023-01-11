@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Liste des villes</h2>
+<div class="table-container">
+    <table class="table table-hover">
+
+        <!-- AFFICHAGE TABLETTE -->
+
+        {% if is_tablet() %}
+        <thead>
+        <tr class="table-primary">
+            <th scope="col">Ville</th>
+            <th scope="col">Code postal</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for ville in listeVilles %}
+            <tr>
+                <td>{{ ville.nom }}</td>
+                <td>{{ ville.codePostal }}</td>
+                <td>
+                    <div>
+                        <a href="{{ path('admin_modifierVille', {'id': ville.id}) }}">Modifier</a>
+                        - <a href="{{ path('admin_supprimerVille', {'id': ville.id}) }}">Supprimer</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <td class="thnomsortie"></td>
+            <td><a href="{{ path('admin_creerVille') }}">Ajouter</a>
+        </tr>
+        </tbody>
+        {% else %}
+
+            <!-- AFFICHAGE STANDARD -->
+
+            <thead>
+            <tr class="table-primary">
+                <th class="thnomsortie" scope="col">Ville</th>
+                <th class="thnomsortie" scope="col">Code postal</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for ville in listeVilles %}
+                <tr>
+                    <td class="thnomsortie">{{ ville.nom }}</td>
+                    <td class="thnomsortie">{{ ville.codePostal }}</td>
+                    <td><a href="{{ path('admin_modifierVille', {'id': ville.id}) }}">Modifier</a>
+                    <td><a href="{{ path('admin_supprimerVille', {'id': ville.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td class="thnomsortie"></td>
+                <td style="padding-left: 300px"><a href="{{ path('admin_creerVille') }}">Ajouter</a>
+            </tr>
+            </tbody>
+        {% endif %}
+    </table>
+
+    {% endblock %}
+
+    {% block title %}
+        {{ parent() }} | Gestion des villes
+    {% endblock %}
+

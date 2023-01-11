@@ -1,4 +1,5 @@
 /.idea/
+/public/hash.php
 
 ###> symfony/framework-bundle ###
 /.env.local

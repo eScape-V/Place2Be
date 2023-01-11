@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Créer une sortie</h2>
+    <div class="d-flex justify-content-center" style="text-align: center">
+    {{ form_start(sortieForm) }}
+        <div>
+            <h6><a href="{{ path('lieu_ajouter') }}">Ajouter un lieu</a></h6>
+        </div>
+        {{ form_widget(sortieForm) }}
+    {{ form_end(sortieForm) }}
+    </div>
+{% endblock %}
+
+{% block title %}{{ parent() }} | Créer sortie{% endblock %}
+

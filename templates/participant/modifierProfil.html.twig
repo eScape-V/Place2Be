@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Mon profil
+{% endblock %}
+
+{% block body %}
+    <h2>Mon profil</h2>
+        <h6><a href="{{ path('mesGroupes') }}">Voir mes groupes</a></h6>
+        <h6><a href="{{ path('creerGroupePrive') }}">Créer un groupe privé</a></h6>
+    <div class="d-flex justify-content-center">
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {% if(app.user.imageName) %}
+                <div>
+                    <h5><img src="{{ asset('uploads/pictures/'~app.user.imageName) }}" alt="Pas d'image uploadée"></h5>
+                </div>
+            {% endif %}
+            <div style="text-align: center">
+                <button class="btn btn-primary">Enregistrer</button>
+                <button class="btn btn-primary" type="reset">Annuler</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

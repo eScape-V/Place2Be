@@ -1,0 +1,157 @@
+.vignette {
+    border-radius: 30px;
+    width: 28px;
+    height: 40px;
+    margin-left: 10px;
+    align-items: end;
+}
+
+img {
+    width: 150px;
+}
+
+body {
+    background: white;
+    background-attachment: fixed;
+    color: #EEE;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 5px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #BC956B;
+}
+
+
+body > .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+main {
+    flex: 1;
+    min-height: 900px;
+}
+
+
+nav ul {
+    display: inline-flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+nav li {
+    margin-right: 1rem;
+}
+
+.produit-liste {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+label {
+    display: block;
+}
+
+
+.flash {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 250px;
+    margin-right: 250px;
+
+}
+
+.flash-success {
+    background-color: #78C2AD;
+    color: white;
+}
+
+.produit-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 50px;
+}
+
+.produit-details-infos > div {
+    margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 700px) {
+    .produit-details {
+        grid-template-columns: 300px 1fr;
+    }
+}
+
+.form2 {
+    max-width: 2000px;
+    display: block;
+}
+
+.edit {
+    display: inline;
+    width: 300px;
+}
+
+h2 {
+    align-content: center;
+    margin: 50px;
+}
+
+button {
+    justify-content: center;
+    text-align: center;
+}
+
+form {
+    justify-content: center;
+}
+
+.liens {
+    text-align: center;
+}
+
+.form-group {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    text-align: center;
+
+}
+
+.profil {
+    display: flex;
+    justify-content: center;
+}
+
+.sortie {
+    text-align: center;
+}
+
+.tdAjouter {
+    width: 75px;
+}
+
+#submit {
+    display: inline-flex;
+}

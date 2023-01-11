@@ -1,0 +1,85 @@
+{% extends 'mobile.html.twig' %}
+
+{% block title %}{{ parent() }} | Détails sortie{% endblock %}
+
+{% block body %}
+    <h2>Détails de la sortie</h2>
+    <br>
+    <div>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>Nom de la sortie: <div>{{ sortie.nom }}</div></td>
+                    <td>Campus: <div>{{ sortie.campus.getNom() }}</div></td>
+                </tr>
+                <tr>
+                    <td>Date et heure de la sortie: <div>{{ sortie.dateHeureDebut | date('d/m/Y')}} à {{ sortie.dateHeureDebut | date('H:i') }}</div></td>
+                    <td>Ville: <div>{{ sortie.lieu.ville.nom }}</div></td>
+                </tr>
+                <tr>
+                    <td>Date limite d'inscription: <div>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</div></td>
+                    <td>Lieu: <div>{{ sortie.lieu.nom }}</div></td>
+                </tr>
+                <tr>
+                    <td>Nombre de places: <div>{{ sortie.nbInscriptionsMax }} personnes</div></td>
+                    <td>Rue: <div>{{ sortie.lieu.rue }}</div></td>
+                </tr>
+                <tr>
+                    <td>Durée: <div>{{ sortie.duree }} minutes</div></td>
+                    <td>Latitude: <div>{{ sortie.lieu.latitude }}</div></td>
+                </tr>
+                <tr>
+                    <td>Description et infos: <div>{{ sortie.infosSortie }}</div></td>
+                    <td>Longitude: <div>{{ sortie.lieu.longitude }}</div></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <br>
+    <br>
+
+    {% if(sortie.participants.contains(app.user)) and sortie.etat.libelle != "En cours" %}
+        <div>
+            <h5>Vous êtes déjà inscrit à cette sortie</h5>
+        </div>
+        <div style="display: flex; justify-content: center">
+            <a href="{{ path('sortie_desistementSortie', {'id': sortie.id}) }}" class="btn btn-primary">Se désister</a>
+        </div>
+        <br>
+    {% else %}
+        {% if(sortie.etat.libelle == "Ouverte") %}
+            <div style="display:flex; justify-content: center">
+                <a href="{{ path('sortie_inscriptionSortie', {'id': sortie.id}) }}" class="btn btn-primary">S'inscrire à la sortie</a>
+            </div>
+            <br>
+        {% endif %}
+    {% endif %}
+
+    {% if(sortie.participants.count > 0) %}
+        <h4>Liste des participants inscrits :</h4>
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">Pseudo</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Campus</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for participant in sortie.participants %}
+                    <tr>
+                        <td>{{ participant.pseudo }}</td>
+                        <td>{{ participant.prenom }}{{ participant.nom }} </td>
+                        <td>{{ participant.campus }}</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <h3>Aucun participant inscrit pour l'instant</h3>
+            {% endif %}
+            </tbody>
+        </table>
+    <br>
+    <br>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Liste des utilisateurs</h2>
+    <div class="table-container">
+        <table class="table table-hover">
+            <!-- AFFICHAGE TABLETTE -->
+            {% if is_tablet() %}
+                <thead>
+                <tr class="table-primary">
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col" style="width: 5%">Actif</th>
+                    <th scope="col">Campus</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+            <tbody>
+                {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td><a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}">{{ utilisateur.pseudo }}</a></td>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.telephone }}</td>
+                    <td style="width: 5%">{% if(utilisateur.actif) %}
+                            X
+                        {% endif %}
+                    </td>
+                    <td>{{ utilisateur.campus.nom }}</td>
+                    <td><a href="{{ path('admin_modifierUtilisateur', {'id': utilisateur.id}) }}">Modifier</a>
+                        <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a>
+                        {% if utilisateur.actif %}
+                           <a href="{{ path('admin_desactiverUtilisateur', {'id': utilisateur.id}) }}">Désactiver</a>
+                        {% else %}
+                            <a href="{{ path('admin_activerUtilisateur', {'id': utilisateur.id}) }}">Activer</a>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                <tr>
+                    <td><a href="{{ path('admin_creerUtilisateur') }}">Ajouter</a>
+                </tr>
+                </tbody>
+
+            <!-- AFFICHAGE STANDARD -->
+            {% else %}
+                <thead class="thead2">
+                <tr class="table-primary">
+                    <th scope="col" style="width: 30px"></th>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col" class="thinscrit">Actif</th>
+                    <th scope="col">Campus</th>
+                    <th scope="col" style="width: 178px;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for utilisateur in utilisateurs %}
+                    <tr>
+                        <td style="width: 30px;">
+                            {% if utilisateur.imageName %}
+                                <a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}" ><img class="vignette"  src="{{ asset('uploads/pictures/'~utilisateur.imageName) }}" alt="" ></a>
+                            {% endif %}
+                        </td>
+                        <td>{{ utilisateur.pseudo }}</td>
+                        <td>{{ utilisateur.email }}</td>
+                        <td>{{ utilisateur.nom }}</td>
+                        <td>{{ utilisateur.prenom }}</td>
+                        <td>{{ utilisateur.telephone }}</td>
+                        <td class="thinscrit">{% if(utilisateur.actif) %}
+                                X
+                            {% endif %}
+                        </td>
+                        <td>{{ utilisateur.campus.nom }}</td>
+                        <td style="width: 178px;"><a href="{{ path('afficherProfil', {'id': utilisateur.id}) }}">Afficher</a>
+                            - <a href="{{ path('admin_modifierUtilisateur', {'id': utilisateur.id}) }}">Modifier</a>
+                            - <a href="{{ path('admin_supprimerUtilisateur', {'id': utilisateur.id}) }}">Supprimer</a>
+                            {% if utilisateur.actif %}
+                                - <a href="{{ path('admin_desactiverUtilisateur', {'id': utilisateur.id}) }}">Désactiver</a>
+                            {% else %}
+                                - <a href="{{ path('admin_activerUtilisateur', {'id': utilisateur.id}) }}">Activer</a>
+                            {% endif %}
+                        </td>
+                {% endfor %}
+                <tr>
+                    <td class="tdAjouter"></td>
+                    <td><a href="{{ path('admin_creerUtilisateur') }}">Ajouter</a>
+                </tr>
+                </tbody>
+
+            {% endif %}
+        </table>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | Liste des utilisateurs
+{% endblock %}
+
